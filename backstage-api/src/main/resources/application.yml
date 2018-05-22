@@ -1,0 +1,37 @@
+renren:
+    redis:
+        open: false  # 是否开启redis缓存  true开启   false关闭
+    shiro:
+        redis: false # true表示shiro session存到redis里，需要开启redis，才会生效【分布式场景】
+server:
+    tomcat:
+      max-http-post-size: 102400
+      max-http-header-size: 102400
+    port: 8091
+    servlet:
+      context-path: /backstage-api
+spring:
+    dubbo:
+       application:
+           name: backstage-api
+       protocol:
+           port: 21866
+       registry:
+           address: zookeeper://192.168.35.234:2181
+           group: backstage-dev
+       scan: com.baojia.backstage.api
+    redis:
+        #database: 0
+        host: 10.1.11.118
+        port: 6390
+        password: 6390     # 密码（默认为空）
+        timeout: 6000ms  # 连接超时时长（毫秒）
+        jedis:
+            pool:
+                max-active: 1000  # 连接池最大连接数（使用负值表示没有限制）
+                max-wait: -1ms      # 连接池最大阻塞等待时间（使用负值表示没有限制）
+                max-idle: 10      # 连接池中的最大空闲连接
+                min-idle: 5       # 连接池中的最小空闲连接
+    freemarker:
+        suffix: .html
+        request-context-attribute: request
