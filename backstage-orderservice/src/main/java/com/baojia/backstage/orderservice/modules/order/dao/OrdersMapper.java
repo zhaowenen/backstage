@@ -1,6 +1,6 @@
 package com.baojia.backstage.orderservice.modules.order.dao;
 
-import com.baojia.backstage.orderdomain.bo.OrdersBo;
+import com.baojia.backstage.domain.order.bo.OrdersBo;
 import com.baojia.backstage.ordersdk.models.OrdersEntity;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 

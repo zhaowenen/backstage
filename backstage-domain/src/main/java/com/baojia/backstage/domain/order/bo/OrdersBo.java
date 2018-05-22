@@ -1,4 +1,4 @@
-package com.baojia.backstage.orderdomain.bo;
+package com.baojia.backstage.domain.order.bo;
 
 /**
  * @author wxr

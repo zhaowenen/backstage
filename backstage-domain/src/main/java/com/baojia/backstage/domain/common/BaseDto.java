@@ -1,4 +1,4 @@
-package com.baojia.backstage.orderdomain.dto;
+package com.baojia.backstage.domain.common;
 
 import java.io.Serializable;
 

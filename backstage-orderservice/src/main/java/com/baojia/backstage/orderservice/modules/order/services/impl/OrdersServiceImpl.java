@@ -2,7 +2,7 @@ package com.baojia.backstage.orderservice.modules.order.services.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.baojia.backstage.common.auth.util.PageUtils;
-import com.baojia.backstage.orderdomain.bo.OrdersBo;
+import com.baojia.backstage.domain.order.bo.OrdersBo;
 import com.baojia.backstage.ordersdk.models.OrdersEntity;
 import com.baojia.backstage.ordersdk.services.IOrdersService;
 import com.baojia.backstage.orderservice.modules.order.dao.OrdersMapper;
