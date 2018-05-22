@@ -9,9 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>backstage-orderdomain</artifactId>
+    <artifactId>backstage-domain</artifactId>
 
-    <name>backstage-orderdomain</name>
+    <name>backstage-domain</name>
     <url>http://www.example.com</url>
 
     <properties>

@@ -14,7 +14,7 @@
  * the License.
  */
 
-package io.renren.common.validator.group;
+package com.baojia.backstage.common.auth.validator.group;
 
 /**
  * 新增数据 Group

@@ -15,7 +15,7 @@
         <module>backstage-securitysdk</module>
         <module>backstage-orderservice</module>
         <module>backstage-ordersdk</module>
-        <module>backstage-orderdomain</module>
+        <module>backstage-domain</module>
     </modules>
 
 
