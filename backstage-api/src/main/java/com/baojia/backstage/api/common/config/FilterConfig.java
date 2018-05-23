@@ -1,4 +1,6 @@
+/*
 
+*/
 /**
  * Copyright 2018 人人开源 http://www.renren.io
  * <p>
@@ -12,7 +14,8 @@
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
- * the License.*/
+ * the License.*//*
+
 
 package com.baojia.backstage.api.common.config;
 
@@ -24,13 +27,15 @@ import org.springframework.web.filter.DelegatingFilterProxy;
 
 import javax.servlet.DispatcherType;
 
+*/
 /*
  *
  * Filter配置
  *
  * @author Mark sunlightcs@gmail.com
  * @since 2.1.0 2017-04-21
- */
+ *//*
+
 
 
 @Configuration
@@ -59,3 +64,4 @@ public class FilterConfig {
         return registration;
     }
 }
+*/

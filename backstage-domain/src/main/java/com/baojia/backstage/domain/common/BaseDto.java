@@ -13,6 +13,10 @@ public class BaseDto implements Serializable{
     private Integer pageNum = 1;
     //每页几条
     private Integer pageSize = 10;
+    //查询字段类别
+    private String conditionType;
+    //关键字搜索
+    private String keyWords;
 
     public Integer getPageNum() {
         return pageNum;
@@ -28,5 +32,21 @@ public class BaseDto implements Serializable{
 
     public void setPageSize(Integer pageSize) {
         this.pageSize = pageSize;
+    }
+
+    public String getConditionType() {
+        return conditionType;
+    }
+
+    public void setConditionType(String conditionType) {
+        this.conditionType = conditionType;
+    }
+
+    public String getKeyWords() {
+        return keyWords;
+    }
+
+    public void setKeyWords(String keyWords) {
+        this.keyWords = keyWords;
     }
 }

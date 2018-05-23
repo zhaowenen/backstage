@@ -1,12 +1,15 @@
 package com.baojia.backstage.domain.order.bo;
 
+import java.io.Serializable;
+
 /**
  * @author wxr
  * @Title: OrdersBo
  * @Description: 业务对象，封装对象、复杂对象 ，里面可能包含多个类
+ * 此类为查询类别返回的复杂对象
  * @date 2018/5/22 17:06
  */
-public class OrdersBo {
+public class OrdersBo implements Serializable{
     private String orderNo;//订单编号
     private String mobile;//手机号
     private String plateNo;//车牌号

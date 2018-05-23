@@ -15,21 +15,6 @@
 
   <!--关联查询订单的分页信息-->
   <select id="complexOrdersPage" parameterType="com.baojia.backstage.domain.order.dto.OrdersDto" resultMap="gatherMap">
-    select * from (
-          SELECT
-          os.order_no,
-          os.create_time,
-          ob.plate_no,
-          us.mobile,
-          us.nick_name,
-          ob.take_adress,
-          ob.orders_mileage,
-          os.order_amount,
-          os.order_status
-      FROM
-          orders os
-      LEFT JOIN orders_bike ob ON ob.order_no = os.order_no
-      LEFT JOIN `user` us ON us.user_id = os.user_id
-      ) gatherOrders
+    select order_no,order_amount from orders_0
   </select>
 </mapper>

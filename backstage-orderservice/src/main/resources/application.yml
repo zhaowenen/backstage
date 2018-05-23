@@ -35,7 +35,7 @@ spring:
             address: zookeeper://192.168.35.234:2181
             group: backstage-dev
         protocol:
-            port: 20881
+            port: 20882
         scan: com.baojia.backstage.orderservice.modules.order.services.impl
 
 
@@ -88,6 +88,11 @@ pagehelper:
   params: count=countSql
   returnPageInfo: check
 
+
+lock:
+  bike:
+    command:
+      url: http://47.95.48.208:83/simulate/service
 
 
 

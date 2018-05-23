@@ -12,7 +12,8 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- */
+ *//*
+
 
 package com.baojia.backstage.api.common.config;
 
@@ -34,12 +35,14 @@ import org.springframework.stereotype.Component;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+*/
 /**
  * Shiro的配置文件
  *
  * @author Mark sunlightcs@gmail.com
  * @since 3.0.0 2017-09-27
- */
+ *//*
+
 @Configuration
 public class ShiroConfig {
 
@@ -114,3 +117,4 @@ public class ShiroConfig {
         return advisor;
     }
 }
+*/
