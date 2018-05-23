@@ -8,8 +8,8 @@ package com.baojia.backstage.common.auth.util;
  */
 public class Result {
 
-	final public static Result SUCCESS = new Result(1, "success");
-	final public static Result ERROR = new Result(0, "error");
+	final public static Result SUCCESS = new Result(0, "success");
+	final public static Result ERROR = new Result(1, "error");
 	final public static Result NOT_AUTHED = new Result(403, "not authed");
 	final public static Result ERROR_PARAM = new Result(40011, "Request Params error");
 

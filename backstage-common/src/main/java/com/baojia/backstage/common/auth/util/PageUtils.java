@@ -41,6 +41,11 @@ public class PageUtils implements Serializable {
 	//列表数据
 	private List<?> list;
 	
+	//dubbo的函数返回类，含有有参构造函数时，必须写明一个无参构造函数
+	public PageUtils() {
+		super();
+	}
+
 	/**
 	 * 分页
 	 * @param list        列表数据

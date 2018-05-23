@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baojia.backstage.depositservice.modules.deposit.dao.DepositOrderMapper" >
+
+    <resultMap id="BaseResultMap" type="com.baojia.backstage.depositsdk.service.models.DepositOrder" >
+        <id column="deposit_order_id" property="depositOrderId" jdbcType="BIGINT" />
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="recharge_amount" property="rechargeAmount" jdbcType="DECIMAL" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="recharge_time" property="rechargeTime" jdbcType="TIMESTAMP" />
+        <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+        <result column="pay_method" property="payMethod" jdbcType="INTEGER" />
+        <result column="m_id" property="mId" jdbcType="VARCHAR" />
+        <result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+        <result column="ad_code" property="adCode" jdbcType="VARCHAR" />
+        <result column="refund_type" property="refundType" jdbcType="INTEGER" />
+        <result column="refund_amount" property="refundAmount" jdbcType="DECIMAL" />
+        <result column="refund_time" property="refundTime" jdbcType="TIMESTAMP" />
+        <result column="del_flag" property="delFlag" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        deposit_order_id, order_no, user_id, recharge_amount, status, recharge_time, pay_time, 
+        pay_method, m_id, city_code, ad_code, refund_type, refund_amount, refund_time, del_flag, 
+        create_time, modify_time
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select 
+        <include refid="Base_Column_List" />
+        from deposit_order
+        where deposit_order_id = #{depositOrderId,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+        delete from deposit_order
+        where deposit_order_id = #{depositOrderId,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.baojia.backstage.depositsdk.service.models.DepositOrder" >
+        insert into deposit_order (deposit_order_id, order_no, user_id, 
+            recharge_amount, status, recharge_time, 
+            pay_time, pay_method, m_id, 
+            city_code, ad_code, refund_type, 
+            refund_amount, refund_time, del_flag, 
+            create_time, modify_time)
+        values (#{depositOrderId,jdbcType=BIGINT}, #{orderNo,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT}, 
+            #{rechargeAmount,jdbcType=DECIMAL}, #{status,jdbcType=INTEGER}, #{rechargeTime,jdbcType=TIMESTAMP}, 
+            #{payTime,jdbcType=TIMESTAMP}, #{payMethod,jdbcType=INTEGER}, #{mId,jdbcType=VARCHAR}, 
+            #{cityCode,jdbcType=VARCHAR}, #{adCode,jdbcType=VARCHAR}, #{refundType,jdbcType=INTEGER}, 
+            #{refundAmount,jdbcType=DECIMAL}, #{refundTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=INTEGER}, 
+            #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.baojia.backstage.depositsdk.service.models.DepositOrder" >
+        insert into deposit_order
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="depositOrderId != null" >
+                deposit_order_id,
+            </if>
+            <if test="orderNo != null" >
+                order_no,
+            </if>
+            <if test="userId != null" >
+                user_id,
+            </if>
+            <if test="rechargeAmount != null" >
+                recharge_amount,
+            </if>
+            <if test="status != null" >
+                status,
+            </if>
+            <if test="rechargeTime != null" >
+                recharge_time,
+            </if>
+            <if test="payTime != null" >
+                pay_time,
+            </if>
+            <if test="payMethod != null" >
+                pay_method,
+            </if>
+            <if test="mId != null" >
+                m_id,
+            </if>
+            <if test="cityCode != null" >
+                city_code,
+            </if>
+            <if test="adCode != null" >
+                ad_code,
+            </if>
+            <if test="refundType != null" >
+                refund_type,
+            </if>
+            <if test="refundAmount != null" >
+                refund_amount,
+            </if>
+            <if test="refundTime != null" >
+                refund_time,
+            </if>
+            <if test="delFlag != null" >
+                del_flag,
+            </if>
+            <if test="createTime != null" >
+                create_time,
+            </if>
+            <if test="modifyTime != null" >
+                modify_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="depositOrderId != null" >
+                #{depositOrderId,jdbcType=BIGINT},
+            </if>
+            <if test="orderNo != null" >
+                #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null" >
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="rechargeAmount != null" >
+                #{rechargeAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="status != null" >
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="rechargeTime != null" >
+                #{rechargeTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="payTime != null" >
+                #{payTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="payMethod != null" >
+                #{payMethod,jdbcType=INTEGER},
+            </if>
+            <if test="mId != null" >
+                #{mId,jdbcType=VARCHAR},
+            </if>
+            <if test="cityCode != null" >
+                #{cityCode,jdbcType=VARCHAR},
+            </if>
+            <if test="adCode != null" >
+                #{adCode,jdbcType=VARCHAR},
+            </if>
+            <if test="refundType != null" >
+                #{refundType,jdbcType=INTEGER},
+            </if>
+            <if test="refundAmount != null" >
+                #{refundAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="refundTime != null" >
+                #{refundTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delFlag != null" >
+                #{delFlag,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null" >
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null" >
+                #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.baojia.backstage.depositsdk.service.models.DepositOrder" >
+        update deposit_order
+        <set >
+            <if test="orderNo != null" >
+                order_no = #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null" >
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="rechargeAmount != null" >
+                recharge_amount = #{rechargeAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="status != null" >
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="rechargeTime != null" >
+                recharge_time = #{rechargeTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="payTime != null" >
+                pay_time = #{payTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="payMethod != null" >
+                pay_method = #{payMethod,jdbcType=INTEGER},
+            </if>
+            <if test="mId != null" >
+                m_id = #{mId,jdbcType=VARCHAR},
+            </if>
+            <if test="cityCode != null" >
+                city_code = #{cityCode,jdbcType=VARCHAR},
+            </if>
+            <if test="adCode != null" >
+                ad_code = #{adCode,jdbcType=VARCHAR},
+            </if>
+            <if test="refundType != null" >
+                refund_type = #{refundType,jdbcType=INTEGER},
+            </if>
+            <if test="refundAmount != null" >
+                refund_amount = #{refundAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="refundTime != null" >
+                refund_time = #{refundTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delFlag != null" >
+                del_flag = #{delFlag,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null" >
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null" >
+                modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where deposit_order_id = #{depositOrderId,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.baojia.backstage.depositsdk.service.models.DepositOrder" >
+        update deposit_order
+        set order_no = #{orderNo,jdbcType=VARCHAR},
+            user_id = #{userId,jdbcType=BIGINT},
+            recharge_amount = #{rechargeAmount,jdbcType=DECIMAL},
+            status = #{status,jdbcType=INTEGER},
+            recharge_time = #{rechargeTime,jdbcType=TIMESTAMP},
+            pay_time = #{payTime,jdbcType=TIMESTAMP},
+            pay_method = #{payMethod,jdbcType=INTEGER},
+            m_id = #{mId,jdbcType=VARCHAR},
+            city_code = #{cityCode,jdbcType=VARCHAR},
+            ad_code = #{adCode,jdbcType=VARCHAR},
+            refund_type = #{refundType,jdbcType=INTEGER},
+            refund_amount = #{refundAmount,jdbcType=DECIMAL},
+            refund_time = #{refundTime,jdbcType=TIMESTAMP},
+            del_flag = #{delFlag,jdbcType=INTEGER},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+        where deposit_order_id = #{depositOrderId,jdbcType=BIGINT}
+    </update>
+</mapper>
