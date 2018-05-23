@@ -1,8 +1,10 @@
 package com.baojia.backstage.common.handler;
 
-import com.alibaba.fastjson.JSON;
-import com.baojia.backstage.common.bean.ResultDO;
-import com.baojia.common.intercetpor.AppInterceptors;
+import java.lang.reflect.Method;
+import java.util.Date;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.MethodParameter;
@@ -12,9 +14,10 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
-import javax.servlet.http.HttpServletRequest;
-import java.lang.reflect.Method;
-import java.util.Date;
+
+import com.alibaba.fastjson.JSON;
+import com.baojia.backstage.common.bean.ResultDO;
+import com.baojia.backstage.common.intercetpor.AppInterceptors;
 
 /**
  * @Description: 统一响应结果处理
