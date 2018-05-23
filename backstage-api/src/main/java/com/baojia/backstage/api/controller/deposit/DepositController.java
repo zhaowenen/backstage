@@ -4,7 +4,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.baojia.backstage.api.controller.sys.AbstractController;
-import com.baojia.backstage.common.auth.util.R;
 
 /**
  * @author renjing
@@ -15,7 +14,5 @@ import com.baojia.backstage.common.auth.util.R;
 @RestController
 @RequestMapping("/deposits")
 public class DepositController extends AbstractController {
-	public R getDeposits() {
-		return R.ok();
-	}
+	
 }
