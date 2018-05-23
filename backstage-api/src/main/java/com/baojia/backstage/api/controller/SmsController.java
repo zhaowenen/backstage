@@ -1,4 +1,4 @@
-package com.baojia.backstage.controller;
+package com.baojia.backstage.api.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

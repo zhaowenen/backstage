@@ -1,4 +1,4 @@
-package com.baojia.common.intercetpor;
+package com.baojia.backstage.common.intercetpor;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

@@ -17,20 +17,21 @@
 package com.baojia.backstage.securitysdk.models;
 
 
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import com.baojia.backstage.common.auth.validator.group.AddGroup;
+import com.baojia.backstage.common.auth.validator.group.UpdateGroup;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.renren.common.validator.group.AddGroup;
-import io.renren.common.validator.group.UpdateGroup;
-
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
 
 /**
  * 系统用户

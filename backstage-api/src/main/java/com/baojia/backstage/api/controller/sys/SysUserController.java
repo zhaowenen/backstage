@@ -17,6 +17,18 @@
 package com.baojia.backstage.api.controller.sys;
 
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.baojia.backstage.api.common.annotation.SysLog;
 import com.baojia.backstage.api.shiro.ShiroUtils;
@@ -24,20 +36,11 @@ import com.baojia.backstage.common.auth.util.PageUtils;
 import com.baojia.backstage.common.auth.util.R;
 import com.baojia.backstage.common.auth.validator.Assert;
 import com.baojia.backstage.common.auth.validator.ValidatorUtils;
+import com.baojia.backstage.common.auth.validator.group.AddGroup;
+import com.baojia.backstage.common.auth.validator.group.UpdateGroup;
 import com.baojia.backstage.securitysdk.models.SysUserEntity;
 import com.baojia.backstage.securitysdk.services.SysUserRoleService;
 import com.baojia.backstage.securitysdk.services.SysUserService;
-import io.renren.common.validator.group.AddGroup;
-import io.renren.common.validator.group.UpdateGroup;
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 
 /**
  * 系统用户
