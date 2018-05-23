@@ -1,7 +1,6 @@
 package com.baojia.backstage.common.auth.util;
 
 /**
- * 
 * @Title: Result  
 * @Description: api接口统一返回bean 
 * @author renjing  
