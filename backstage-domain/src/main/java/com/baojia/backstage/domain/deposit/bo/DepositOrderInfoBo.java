@@ -1,7 +1,9 @@
 package com.baojia.backstage.domain.deposit.bo;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+
 
 
 /**
@@ -10,7 +12,7 @@ import java.util.Date;
 * @author renjing  
 * @date 2018年5月23日 下午18:52:29
  */
-public class DepositOrderInfoBo {
+public class DepositOrderInfoBo implements Serializable{
     private Long depositOrderId;
 
     /**

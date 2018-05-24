@@ -1,37 +1,41 @@
 package com.baojia.backstage.domain.deposit.dto;
 
-
 import java.util.Date;
 
 import com.baojia.backstage.domain.common.BaseDto;
 
 /**
-* @Title: DepositOrderDto  
-* @Description: 押金订单列表前端传入参数
-* @author renjing  
-* @date 2018年5月23日 下午17:55:49
+ * @Title: DepositOrderDto
+ * @Description: 押金订单列表前端传入参数
+ * @author renjing
+ * @date 2018年5月23日 下午17:55:49
  */
-public class DepositOrderDto extends BaseDto{
-	
-	/**
-     * 订单状态
-     */
-    private Integer status;
+public class DepositOrderDto extends BaseDto {
 
-    /**
-     * 充值时间
-     */
-    private Date rechargeTime;
-    
-    /**
-     * 支付方式(1:微信,2:支付宝)
-     */
-    private Integer payMethod;
-    
-    /**
-     * 用户手机号
-     */
-    private String mobile;
+	/**
+	 * 订单状态
+	 */
+	private Integer status;
+
+	/**
+	 * 开始时间
+	 */
+	private Date startTime;
+
+	/**
+	 * 结束时间
+	 */
+	private Date endTime;
+
+	/**
+	 * 支付方式(1:微信,2:支付宝)
+	 */
+	private Integer payMethod;
+
+	/**
+	 * 用户手机号
+	 */
+	private String mobile;
 
 	public Integer getStatus() {
 		return status;
@@ -41,12 +45,20 @@ public class DepositOrderDto extends BaseDto{
 		this.status = status;
 	}
 
-	public Date getRechargeTime() {
-		return rechargeTime;
+	public Date getStartTime() {
+		return startTime;
 	}
 
-	public void setRechargeTime(Date rechargeTime) {
-		this.rechargeTime = rechargeTime;
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
+
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
 	}
 
 	public Integer getPayMethod() {
@@ -64,5 +76,5 @@ public class DepositOrderDto extends BaseDto{
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
-    
+
 }

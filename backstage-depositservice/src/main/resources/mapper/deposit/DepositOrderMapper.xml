@@ -21,12 +21,46 @@
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
         <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
     </resultMap>
+    
+    <resultMap id="DepositOrderBoMap" type="com.baojia.backstage.domain.deposit.bo.DepositOrderBo" >
+        <result column="deposit_order_id" property="depositOrderId" jdbcType="BIGINT" />
+        <result column="nick_name" property="userName" jdbcType="VARCHAR" />
+        <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="recharge_time" property="rechargeTime" jdbcType="TIMESTAMP" />
+        <result column="pay_method" property="payMethod" jdbcType="INTEGER" />
+        <result column="refund_time" property="refundTime" jdbcType="TIMESTAMP" />
+    </resultMap>
 
     <sql id="Base_Column_List" >
         deposit_order_id, order_no, user_id, recharge_amount, status, recharge_time, pay_time, 
         pay_method, m_id, city_code, ad_code, refund_type, refund_amount, refund_time, del_flag, 
         create_time, modify_time
     </sql>
+    
+    <select id="selectDepositOrderList" resultMap="DepositOrderBoMap" parameterType="com.baojia.backstage.domain.deposit.dto.DepositOrderDto" >
+        select o.deposit_order_id, u.nick_name, u.mobile , o.status, o.recharge_time, o.pay_method, o.refund_time 
+		from deposit_order o LEFT JOIN users u on o.user_id = u.user_id 
+		<where>
+				o.del_flag != 0 
+			<if test="mobile != null">
+				and u.mobile = #{mobile,jdbcType=VARCHAR}
+			</if>
+			<if test="status != null">
+				and o.status = #{status,jdbcType=INTEGER}
+			</if>
+			<if test="payMethod != null">
+				and o.pay_method = #{payMethod,jdbcType=INTEGER}
+			</if>
+			<if test="startTime != null">
+				and o.recharge_time <![CDATA[ >= ]]> #{startTime,jdbcType=DATE}
+			</if>
+			<if test="endTime != null">
+				and o.recharge_time <![CDATA[ <= ]]> #{endTime,jdbcType=DATE}
+			</if>
+		</where>
+    </select>
+    
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
         select 

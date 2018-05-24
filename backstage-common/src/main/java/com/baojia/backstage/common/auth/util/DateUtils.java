@@ -21,8 +21,12 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Date;
 
 /**
@@ -33,6 +37,9 @@ import java.util.Date;
  * @date 2016年12月21日 下午12:53:33
  */
 public class DateUtils {
+	
+	protected static Logger logger = LoggerFactory.getLogger(DateUtils.class);
+	
 	/** 时间格式(yyyy-MM-dd) */
 	public final static String DATE_PATTERN = "yyyy-MM-dd";
 	/** 时间格式(yyyy-MM-dd HH:mm:ss) */
@@ -173,4 +180,19 @@ public class DateUtils {
         DateTime dateTime = new DateTime(date);
         return dateTime.plusYears(years).toDate();
     }
+    
+    public static Date parse(String strDate) {
+
+		if (StringUtils.isBlank(strDate)) {
+			return null;
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat(DATE_TIME_PATTERN);
+		Date date = null;
+		try {
+			date = sdf.parse(strDate);
+		} catch (ParseException e) {
+			logger.error(e.getMessage(), e);
+		}
+		return date;
+	}
 }

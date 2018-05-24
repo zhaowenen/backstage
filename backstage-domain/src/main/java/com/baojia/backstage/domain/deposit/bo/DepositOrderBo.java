@@ -1,6 +1,8 @@
 package com.baojia.backstage.domain.deposit.bo;
 
+import java.io.Serializable;
 import java.util.Date;
+
 
 
 /**
@@ -9,7 +11,7 @@ import java.util.Date;
 * @author renjing  
 * @date 2018年5月23日 下午18:02:49
  */
-public class DepositOrderBo {
+public class DepositOrderBo implements Serializable{
     private Long depositOrderId;
 
     /**

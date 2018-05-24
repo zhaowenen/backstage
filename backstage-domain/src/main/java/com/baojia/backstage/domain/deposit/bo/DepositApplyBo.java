@@ -1,9 +1,9 @@
 package com.baojia.backstage.domain.deposit.bo;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import com.baojia.backstage.domain.common.BaseDto;
 
 /**
 * @Title: DepositApply  
@@ -11,7 +11,7 @@ import com.baojia.backstage.domain.common.BaseDto;
 * @author renjing  
 * @date 2018年5月23日 上午11:38:49
  */
-public class DepositApplyBo extends BaseDto{
+public class DepositApplyBo implements Serializable{
     /**
      * 主键
      */

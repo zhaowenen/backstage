@@ -1,9 +1,8 @@
 package com.baojia.backstage.domain.deposit.dto;
 
-import java.math.BigDecimal;
-import java.util.Date;
 
 import com.baojia.backstage.domain.common.BaseDto;
+
 
 /**
 * @Title: DepositApply  
