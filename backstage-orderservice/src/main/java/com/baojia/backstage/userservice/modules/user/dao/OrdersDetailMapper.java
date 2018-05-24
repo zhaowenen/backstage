@@ -1,6 +1,6 @@
 package com.baojia.backstage.userservice.modules.user.dao;
 
-import com.baojia.backstage.ordersdk.models.OrdersDetailEntity;
+import com.baojia.backstage.usersdk.models.OrdersDetailEntity;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 
 /**

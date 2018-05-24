@@ -1,6 +1,6 @@
-package com.baojia.backstage.ordersdk.services;
+package com.baojia.backstage.usersdk.services;
 
-import com.baojia.backstage.ordersdk.models.OrdersOperateEntity;
+import com.baojia.backstage.usersdk.models.OrdersOperateEntity;
 import com.baomidou.mybatisplus.service.IService;
 
 /**

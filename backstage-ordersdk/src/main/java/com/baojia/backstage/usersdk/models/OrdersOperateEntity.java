@@ -1,4 +1,4 @@
-package com.baojia.backstage.ordersdk.models;
+package com.baojia.backstage.usersdk.models;
 
 import com.baomidou.mybatisplus.annotations.TableName;
 

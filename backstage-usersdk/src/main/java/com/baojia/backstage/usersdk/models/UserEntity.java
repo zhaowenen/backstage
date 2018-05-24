@@ -1,4 +1,4 @@
-package com.baojia.backstage.ordersdk.models;
+package com.baojia.backstage.usersdk.models;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -22,6 +22,9 @@ public class UserEntity implements Serializable {
      @mbggenerated 2018-05-23 15:56:12
      */
     private String nickName;
+
+
+    private String realName;//用户的真实姓名
 
     /**
      *   手机号
@@ -182,6 +185,14 @@ public class UserEntity implements Serializable {
      @mbggenerated 2018-05-23 15:56:12
      */
     private static final long serialVersionUID = 1L;
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
 
     public Long getUserId() {
         return userId;

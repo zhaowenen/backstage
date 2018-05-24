@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baojia.backstage.userservice.modules.user.dao.UserCouponMapper">
+
+
+    <select id="countValidNum" parameterType="string" resultType="integer">
+        select count(id) from user_coupon uc where uc.user_id = #{userId} and uc.expiry_time >=now() and
+        uc.coupon_status =1
+    </select>
+
+
+
+</mapper>

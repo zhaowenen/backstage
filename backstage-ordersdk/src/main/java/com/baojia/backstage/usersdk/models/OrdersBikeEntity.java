@@ -1,4 +1,4 @@
-package com.baojia.backstage.ordersdk.models;
+package com.baojia.backstage.usersdk.models;
 
 import com.baomidou.mybatisplus.annotations.TableName;
 
@@ -6,138 +6,138 @@ import java.util.Date;
 
 /**
  * @author wxr
- * @Title: 订单详情表
- * @date 2018/5/2214:15
+ * @Title: 订单车辆表
+ * @date 2018/5/2214:13
  */
-@TableName("orders_detail")
-public class OrdersDetailEntity {
+@TableName("orders_bike")
+public class OrdersBikeEntity {
     /**
-     * Column: orders_detail.id
+     * Column: orders_bike.id
      @mbggenerated 2018-05-22 13:57:34
      */
     private Long id;
 
     /**
      *   订单号
-     * Column: orders_detail.order_no
+     * Column: orders_bike.order_no
      @mbggenerated 2018-05-22 13:57:34
      */
     private String orderNo;
 
     /**
+     *   车辆id
+     * Column: orders_bike.bike_id
+     @mbggenerated 2018-05-22 13:57:34
+     */
+    private Long bikeId;
+
+    /**
+     *   车牌号
+     * Column: orders_bike.plate_no
+     @mbggenerated 2018-05-22 13:57:34
+     */
+    private String plateNo;
+
+    /**
      *   取车纬度原生
-     * Column: orders_detail.take_latitude
+     * Column: orders_bike.take_latitude
      @mbggenerated 2018-05-22 13:57:34
      */
     private Double takeLatitude;
 
     /**
      *   取车经度原生
-     * Column: orders_detail.take_longitude
+     * Column: orders_bike.take_longitude
      @mbggenerated 2018-05-22 13:57:34
      */
     private Double takeLongitude;
 
     /**
      *   还车纬度原生
-     * Column: orders_detail.return_latitude
+     * Column: orders_bike.return_latitude
      @mbggenerated 2018-05-22 13:57:34
      */
     private Double returnLatitude;
 
     /**
      *   还车经度原生
-     * Column: orders_detail.return_longitude
+     * Column: orders_bike.return_longitude
      @mbggenerated 2018-05-22 13:57:34
      */
     private Double returnLongitude;
 
     /**
-     *   取车用户纬度 高德
-     * Column: orders_detail.take_user_latitude
+     *   取车gps定位时间
+     * Column: orders_bike.take_gps_time
      @mbggenerated 2018-05-22 13:57:34
      */
-    private Double takeUserLatitude;
+    private Date takeGpsTime;
 
     /**
-     *   还车用户经度 高德
-     * Column: orders_detail.take_user_longitude
+     *   取车gps定位时间
+     * Column: orders_bike.return_gps_time
      @mbggenerated 2018-05-22 13:57:34
      */
-    private Double takeUserLongitude;
-
-    /**
-     *   还车用户纬度 高德
-     * Column: orders_detail.return_user_latitude
-     @mbggenerated 2018-05-22 13:57:34
-     */
-    private Double returnUserLatitude;
-
-    /**
-     *   还车用户经度 高德
-     * Column: orders_detail.return_user_longitude
-     @mbggenerated 2018-05-22 13:57:34
-     */
-    private Double returnUserLongitude;
+    private Date returnGpsTime;
 
     /**
      *   取车地址
-     * Column: orders_detail.take_adress
+     * Column: orders_bike.take_adress
      @mbggenerated 2018-05-22 13:57:34
      */
     private String takeAdress;
 
     /**
      *   还车地址
-     * Column: orders_detail.return_adress
+     * Column: orders_bike.return_adress
      @mbggenerated 2018-05-22 13:57:34
      */
     private String returnAdress;
 
     /**
      *   imei
-     * Column: orders_detail.imei
+     * Column: orders_bike.imei
      @mbggenerated 2018-05-22 13:57:34
      */
     private String imei;
 
     /**
      *   取车里程数
-     * Column: orders_detail.take_mileage
+     * Column: orders_bike.take_mileage
      @mbggenerated 2018-05-22 13:57:34
      */
     private Double takeMileage;
 
     /**
      *   还车里程数
-     * Column: orders_detail.return_mileage
+     * Column: orders_bike.return_mileage
      @mbggenerated 2018-05-22 13:57:34
      */
     private Double returnMileage;
 
     /**
      *   订单里程数
-     * Column: orders_detail.orders_mileage
+     * Column: orders_bike.orders_mileage
      @mbggenerated 2018-05-22 13:57:34
      */
     private Double ordersMileage;
 
     /**
      *   创建时间
-     * Column: orders_detail.create_time
+     * Column: orders_bike.create_time
      @mbggenerated 2018-05-22 13:57:34
      */
     private Date createTime;
 
     /**
      *   修改时间
-     * Column: orders_detail.modify_time
+     * Column: orders_bike.modify_time
      @mbggenerated 2018-05-22 13:57:34
      */
     private Date modifyTime;
 
     /**
-     * Table: orders_detail
+     * Table: orders_bike
      @mbggenerated 2018-05-22 13:57:34
      */
     private static final long serialVersionUID = 1L;
@@ -156,6 +156,22 @@ public class OrdersDetailEntity {
 
     public void setOrderNo(String orderNo) {
         this.orderNo = orderNo == null ? null : orderNo.trim();
+    }
+
+    public Long getBikeId() {
+        return bikeId;
+    }
+
+    public void setBikeId(Long bikeId) {
+        this.bikeId = bikeId;
+    }
+
+    public String getPlateNo() {
+        return plateNo;
+    }
+
+    public void setPlateNo(String plateNo) {
+        this.plateNo = plateNo == null ? null : plateNo.trim();
     }
 
     public Double getTakeLatitude() {
@@ -190,36 +206,20 @@ public class OrdersDetailEntity {
         this.returnLongitude = returnLongitude;
     }
 
-    public Double getTakeUserLatitude() {
-        return takeUserLatitude;
+    public Date getTakeGpsTime() {
+        return takeGpsTime;
     }
 
-    public void setTakeUserLatitude(Double takeUserLatitude) {
-        this.takeUserLatitude = takeUserLatitude;
+    public void setTakeGpsTime(Date takeGpsTime) {
+        this.takeGpsTime = takeGpsTime;
     }
 
-    public Double getTakeUserLongitude() {
-        return takeUserLongitude;
+    public Date getReturnGpsTime() {
+        return returnGpsTime;
     }
 
-    public void setTakeUserLongitude(Double takeUserLongitude) {
-        this.takeUserLongitude = takeUserLongitude;
-    }
-
-    public Double getReturnUserLatitude() {
-        return returnUserLatitude;
-    }
-
-    public void setReturnUserLatitude(Double returnUserLatitude) {
-        this.returnUserLatitude = returnUserLatitude;
-    }
-
-    public Double getReturnUserLongitude() {
-        return returnUserLongitude;
-    }
-
-    public void setReturnUserLongitude(Double returnUserLongitude) {
-        this.returnUserLongitude = returnUserLongitude;
+    public void setReturnGpsTime(Date returnGpsTime) {
+        this.returnGpsTime = returnGpsTime;
     }
 
     public String getTakeAdress() {

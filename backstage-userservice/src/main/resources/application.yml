@@ -32,7 +32,8 @@ spring:
         application:
             name: backstage-orderservice
         registry:
-            address: zookeeper://192.168.35.234:2181
+           # address: zookeeper://192.168.35.234:2181
+            address: zookeeper://10.1.11.92:2181
             group: backstage-dev
         protocol:
             port: 20882

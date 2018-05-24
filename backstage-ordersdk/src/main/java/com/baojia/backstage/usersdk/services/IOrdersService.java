@@ -1,7 +1,7 @@
-package com.baojia.backstage.ordersdk.services;
+package com.baojia.backstage.usersdk.services;
 
 import com.baojia.backstage.common.auth.util.PageUtils;
-import com.baojia.backstage.ordersdk.models.OrdersEntity;
+import com.baojia.backstage.usersdk.models.OrdersEntity;
 import com.baomidou.mybatisplus.service.IService;
 
 import java.util.Map;

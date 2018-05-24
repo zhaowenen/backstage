@@ -1,8 +1,8 @@
 package com.baojia.backstage.userservice.modules.user.services.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.baojia.backstage.ordersdk.models.OrdersDetailEntity;
-import com.baojia.backstage.ordersdk.services.IOrderDetailService;
+import com.baojia.backstage.usersdk.models.OrdersDetailEntity;
+import com.baojia.backstage.usersdk.services.IOrderDetailService;
 import com.baojia.backstage.userservice.modules.user.dao.OrdersDetailMapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.stereotype.Component;
