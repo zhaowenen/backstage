@@ -12,6 +12,7 @@ import com.baojia.backstage.depositsdk.service.models.DepositOrder;
 import com.baojia.backstage.depositsdk.service.service.DepositOrderService;
 import com.baojia.backstage.depositservice.modules.deposit.dao.DepositOrderMapper;
 import com.baojia.backstage.domain.deposit.bo.DepositOrderBo;
+import com.baojia.backstage.domain.deposit.bo.DepositOrderInfoBo;
 import com.baojia.backstage.domain.deposit.dto.DepositOrderDto;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
@@ -26,6 +27,7 @@ import com.github.pagehelper.PageInfo;
 @Component
 @Service(interfaceClass = DepositOrderService.class)
 public class DepositOrderServiceImpl  extends ServiceImpl<DepositOrderMapper, DepositOrder> implements DepositOrderService{
+	
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Override
@@ -35,5 +37,15 @@ public class DepositOrderServiceImpl  extends ServiceImpl<DepositOrderMapper, De
 		PageInfo<DepositOrderBo> pageInfo = new PageInfo<>(depositOrderList);
 		PageUtils page = new PageUtils(pageInfo.getList(), (int)pageInfo.getTotal(), pageInfo.getPageSize(), pageInfo.getPageNum());
         return page;
+	}
+
+	@Override
+	public DepositOrderInfoBo getDepositOrderInfo(Long depositOrderId) {
+		return baseMapper.selectDepositOrderInfo(depositOrderId);
+	}
+
+	@Override
+	public DepositOrderInfoBo getDepositOrderWithDrawInfo(Long depositOrderId) {
+		return baseMapper.selectDepositOrderWithDrawInfo(depositOrderId);
 	}
 }

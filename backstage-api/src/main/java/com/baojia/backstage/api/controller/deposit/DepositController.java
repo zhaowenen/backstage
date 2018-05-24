@@ -1,29 +1,25 @@
 package com.baojia.backstage.api.controller.deposit;
 
-import java.net.URLDecoder;
-import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.baojia.backstage.api.controller.sys.AbstractController;
-import com.baojia.backstage.common.auth.util.DateUtils;
 import com.baojia.backstage.common.auth.util.PageUtils;
-import com.baojia.backstage.common.auth.util.R;
 import com.baojia.backstage.common.auth.util.Result;
-import com.baojia.backstage.common.exception.MiBikeException;
+import com.baojia.backstage.common.exception.MeBikeException;
 import com.baojia.backstage.depositsdk.service.service.DepositApplyService;
 import com.baojia.backstage.depositsdk.service.service.DepositOrderService;
-import com.baojia.backstage.domain.deposit.dto.DepositApplyDto;
+import com.baojia.backstage.domain.deposit.bo.DepositOrderInfoBo;
 import com.baojia.backstage.domain.deposit.dto.DepositOrderDto;
 
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 /**
  * 
@@ -49,12 +45,38 @@ public class DepositController extends AbstractController {
 	public Result getDepositOrderList(DepositOrderDto depositOrderDto) {
 		try {
 			if (depositOrderDto.getPageNum() == null || depositOrderDto.getPageSize() == null) {
-				throw new MiBikeException(Result.ERROR_PARAM);
+				throw new MeBikeException(Result.ERROR_PARAM);
 			}
 			PageUtils list = depositOrderService.selectDepositOrderList(depositOrderDto);
 			
 			Result res = Result.SUCCESS.copyThis();
 			res.setContext(list);
+			return res;
+		} catch (Exception e) {
+			return Result.error(e.getMessage());
+		}
+	}
+	
+	
+	@GetMapping(value = "/depositOrderInfo", produces = { "application/json;charset=UTF-8" })
+	@ApiOperation(value="押金订单查询详情", notes="查询押金订单详情")
+	// @RequiresPermissions("deposits:orderlist")
+	public Result getDepositOrderInfo(@ApiParam(name="depositOrderId",value="押金ID",required=true) @RequestParam("depositOrderId") Long  depositOrderId) {
+		try {
+			if(depositOrderId == null) {
+				throw new MeBikeException(Result.ERROR_PARAM);
+			}
+			DepositOrderInfoBo orderInfo = depositOrderService.getDepositOrderInfo(depositOrderId);
+			DepositOrderInfoBo withDrawInfo = depositOrderService.getDepositOrderWithDrawInfo(depositOrderId);
+			if(withDrawInfo != null) {
+				orderInfo.setOpsUser(withDrawInfo.getOpsUser());
+				orderInfo.setDeductAmount(withDrawInfo.getDeductAmount());
+				orderInfo.setDeductMoneyTime(orderInfo.getRefundTime());	//扣款与提现同时发生，所以扣款时间就是提现时间。因为数据库只有扣款申请，而押金订单表中会更新提现时间
+				orderInfo.setDeductMoneyMemo(withDrawInfo.getDeductMoneyMemo());
+			}
+			
+			Result res = Result.SUCCESS.copyThis();
+			res.setContext(orderInfo);
 			return res;
 		} catch (Exception e) {
 			return Result.error(e.getMessage());

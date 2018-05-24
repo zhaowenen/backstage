@@ -24,12 +24,29 @@
     
     <resultMap id="DepositOrderBoMap" type="com.baojia.backstage.domain.deposit.bo.DepositOrderBo" >
         <result column="deposit_order_id" property="depositOrderId" jdbcType="BIGINT" />
-        <result column="nick_name" property="userName" jdbcType="VARCHAR" />
+        <result column="real_name" property="userName" jdbcType="VARCHAR" />
         <result column="mobile" property="mobile" jdbcType="VARCHAR" />
         <result column="status" property="status" jdbcType="INTEGER" />
         <result column="recharge_time" property="rechargeTime" jdbcType="TIMESTAMP" />
         <result column="pay_method" property="payMethod" jdbcType="INTEGER" />
         <result column="refund_time" property="refundTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <resultMap id="DepositOrderInfoBoMap" type="com.baojia.backstage.domain.deposit.bo.DepositOrderInfoBo" >
+        <result column="deposit_order_id" property="depositOrderId" jdbcType="BIGINT" />
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+        <result column="real_name" property="userName" jdbcType="VARCHAR" />
+        <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+        <result column="pay_method" property="payMethod" jdbcType="INTEGER" />
+        <result column="refund_type" property="refundType" jdbcType="INTEGER" />
+        <result column="refund_time" property="refundTime" jdbcType="TIMESTAMP" />
+        <result column="apply_user_name" property="opsUser" jdbcType="VARCHAR" />
+        <result column="user_account" property="accountNumber" jdbcType="VARCHAR" />
+        <result column="apply_amount" property="deductAmount" jdbcType="DECIMAL" />
+        <result column="apply_node" property="deductMoneyMemo" jdbcType="VARCHAR" />
+        <result column="create_time" property="deductMoneyTime" jdbcType="TIMESTAMP" />
     </resultMap>
 
     <sql id="Base_Column_List" >
@@ -38,8 +55,20 @@
         create_time, modify_time
     </sql>
     
+    <select id="selectDepositOrderInfo" resultMap="DepositOrderInfoBoMap" parameterType="java.lang.Long" >
+    	select o.deposit_order_id, o.status, u.real_name, u.mobile, o.pay_time, o.pay_method, o.order_no, o.refund_time, o.refund_type, a.user_account, a.apply_user_name 
+		from deposit_order o LEFT JOIN users u on o.user_id = u.user_id LEFT JOIN deposit_apply a on o.deposit_order_id = a.deposit_order_id 
+		where o.del_flag != 0 and a.apply_type = 200 and o.deposit_order_id = #{depositOrderId,jdbcType=BIGINT}
+    </select>
+    
+    <select id="selectDepositOrderWithDrawInfo" resultMap="DepositOrderInfoBoMap" parameterType="java.lang.Long" >
+    	select a.apply_user_name, a.apply_amount, a.apply_node, a.create_time
+		from deposit_order o LEFT JOIN deposit_apply a on o.deposit_order_id = a.deposit_order_id 
+		where o.del_flag != 0 and a.apply_type = 300 and o.deposit_order_id = #{depositOrderId,jdbcType=BIGINT}
+    </select>
+    
     <select id="selectDepositOrderList" resultMap="DepositOrderBoMap" parameterType="com.baojia.backstage.domain.deposit.dto.DepositOrderDto" >
-        select o.deposit_order_id, u.nick_name, u.mobile , o.status, o.recharge_time, o.pay_method, o.refund_time 
+        select o.deposit_order_id, u.real_name, u.mobile , o.status, o.recharge_time, o.pay_method, o.refund_time 
 		from deposit_order o LEFT JOIN users u on o.user_id = u.user_id 
 		<where>
 				o.del_flag != 0 

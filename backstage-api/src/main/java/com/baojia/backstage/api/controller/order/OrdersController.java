@@ -67,11 +67,11 @@ public class OrdersController extends AbstractController {
      * @param orderId 订单编号
      * @return
      */
-    @ApiOperation(value="订单详情", notes="根据订单编号查询订单详情")
-    @ApiImplicitParam(name = "orderId", value = "订单编号orderId", required = true, dataType = "Long")
-    @RequestMapping(value = "/cancelOrder", produces = {"application/json;charset=UTF-8"},method = RequestMethod.POST)
-    @RequiresPermissions("orders:cancelOrder")
-    public R getOrderDetailById(Long orderId){
-        return R.ok();
-    }
+//    @ApiOperation(value="订单详情", notes="根据订单编号查询订单详情")
+//    @ApiImplicitParam(name = "orderId", value = "订单编号orderId", required = true, dataType = "Long")
+//    @RequestMapping(value = "/cancelOrder", produces = {"application/json;charset=UTF-8"},method = RequestMethod.POST)
+//    @RequiresPermissions("orders:cancelOrder")
+//    public R getOrderDetailById(Long orderId){
+//        return R.ok();
+//    }
 }

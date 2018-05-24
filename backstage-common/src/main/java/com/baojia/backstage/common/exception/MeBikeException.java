@@ -2,7 +2,7 @@ package com.baojia.backstage.common.exception;
 
 import com.baojia.backstage.common.auth.util.Result;
 
-public class MiBikeException extends Exception {
+public class MeBikeException extends Exception {
 
 	/**
 	 * 
@@ -19,24 +19,24 @@ public class MiBikeException extends Exception {
 		return context;
 	}
 
-	public MiBikeException() {
+	public MeBikeException() {
 		super();
 	}
 
-	public MiBikeException(int code, String msg) {
+	public MeBikeException(int code, String msg) {
 		this(code, msg, null);
 	}
 
-	public MiBikeException(int code, String msg, Throwable t) {
+	public MeBikeException(int code, String msg, Throwable t) {
 		super(msg, t);
 		this.code = code;
 	}
 
-	public MiBikeException(Result r) {
+	public MeBikeException(Result r) {
 		this(r.getCode(), r.getMsg(), null);
 	}
 
-	public MiBikeException(Result r, Object context) {
+	public MeBikeException(Result r, Object context) {
 		this(r.getCode(), r.getMsg());
 		this.context = context;
 	}
