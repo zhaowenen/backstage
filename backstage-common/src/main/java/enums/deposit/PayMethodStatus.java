@@ -1,4 +1,6 @@
-package enums;
+package enums.deposit;
+
+import enums.EnumType;
 
 public class PayMethodStatus extends EnumType {
 
