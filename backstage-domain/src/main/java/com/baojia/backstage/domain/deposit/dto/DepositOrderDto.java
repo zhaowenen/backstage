@@ -20,12 +20,12 @@ public class DepositOrderDto extends BaseDto {
 	/**
 	 * 开始时间
 	 */
-	private Date startTime;
+	private String startTime;
 
 	/**
 	 * 结束时间
 	 */
-	private Date endTime;
+	private String endTime;
 
 	/**
 	 * 支付方式(1:微信,2:支付宝)
@@ -45,19 +45,19 @@ public class DepositOrderDto extends BaseDto {
 		this.status = status;
 	}
 
-	public Date getStartTime() {
+	public String getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(Date startTime) {
+	public void setStartTime(String startTime) {
 		this.startTime = startTime;
 	}
 
-	public Date getEndTime() {
+	public String getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(Date endTime) {
+	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
 

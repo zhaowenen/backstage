@@ -4,7 +4,9 @@ import java.net.URLDecoder;
 import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,6 +22,7 @@ import com.baojia.backstage.depositsdk.service.service.DepositOrderService;
 import com.baojia.backstage.domain.deposit.dto.DepositApplyDto;
 import com.baojia.backstage.domain.deposit.dto.DepositOrderDto;
 
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 
 /**
@@ -38,44 +41,16 @@ public class DepositController extends AbstractController {
 	@Reference
 	private DepositOrderService depositOrderService;
 
-	@RequestMapping(value = "/applylist", produces = { "application/json;charset=UTF-8" })
-	// @RequiresPermissions("deposits:list")
-	public R getDepositApplyById(DepositApplyDto depositApplyDto) {
-		PageUtils page = depositApplyService.complexDepositApplyPage(depositApplyDto.getPageNum(),
-				depositApplyDto.getPageSize());
-		return R.ok().put("apply", page);
-	}
-
-	@RequestMapping(value = "/orderlist", produces = { "application/json;charset=UTF-8" })
+	
+	@GetMapping(value = "/orderlist", produces = { "application/json;charset=UTF-8" })
+	@ApiOperation(value="押金订单查询列表", notes="根据查询条件查询押金订单列表")
+//	@ApiImplicitParam(name = "DepositOrderDto", value = "订单复杂对象实体DepositOrderDto", required = false, dataType = "DepositOrderDto")
 	// @RequiresPermissions("deposits:orderlist")
-	public Result getDepositOrderList(@RequestParam("pageNum") Integer pageNum,
-			@RequestParam("pageSize") Integer pageSize,
-			@RequestParam(value = "payMethod", required = false) Integer payMethod,
-			@RequestParam(value = "status", required = false) Integer status,
-			@RequestParam(value = "mobile", required = false) String mobile,
-			@RequestParam(value = "startTime", required = false) String startTime,
-			@RequestParam(value = "endTime", required = false) String endTime) {
+	public Result getDepositOrderList(DepositOrderDto depositOrderDto) {
 		try {
-			if (pageNum == null || pageSize == null) {
+			if (depositOrderDto.getPageNum() == null || depositOrderDto.getPageSize() == null) {
 				throw new MiBikeException(Result.ERROR_PARAM);
 			}
-			Date start = null;
-			Date end = null;
-			if (StringUtils.isNotBlank(startTime)) {
-				start = DateUtils.parse(URLDecoder.decode(startTime));
-			}
-			if (StringUtils.isNotBlank(endTime)) {
-				end = DateUtils.parse(URLDecoder.decode(endTime));
-			}
-			DepositOrderDto depositOrderDto = new DepositOrderDto();
-			depositOrderDto.setMobile(mobile);
-			depositOrderDto.setPageNum(pageNum);
-			depositOrderDto.setPageSize(pageSize);
-			depositOrderDto.setPayMethod(payMethod);
-			depositOrderDto.setStatus(status);
-			depositOrderDto.setStartTime(start);
-			depositOrderDto.setEndTime(end);
-
 			PageUtils list = depositOrderService.selectDepositOrderList(depositOrderDto);
 			
 			Result res = Result.SUCCESS.copyThis();

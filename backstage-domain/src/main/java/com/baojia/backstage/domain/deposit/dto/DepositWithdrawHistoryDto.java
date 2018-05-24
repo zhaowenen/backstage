@@ -27,7 +27,7 @@ public class DepositWithdrawHistoryDto {
     /**
      * 扣款时间
      */
-    private Date deductMoneyTime;
+    private String deductMoneyTime;
 
 	public String getUserName() {
 		return userName;
@@ -53,11 +53,11 @@ public class DepositWithdrawHistoryDto {
 		this.opsUser = opsUser;
 	}
 
-	public Date getDeductMoneyTime() {
+	public String getDeductMoneyTime() {
 		return deductMoneyTime;
 	}
 
-	public void setDeductMoneyTime(Date deductMoneyTime) {
+	public void setDeductMoneyTime(String deductMoneyTime) {
 		this.deductMoneyTime = deductMoneyTime;
 	}
     

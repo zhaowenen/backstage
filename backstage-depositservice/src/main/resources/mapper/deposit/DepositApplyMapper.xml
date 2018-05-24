@@ -25,29 +25,6 @@
         <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
     </resultMap>
     
-    <resultMap id="gatherMap" type="com.baojia.backstage.domain.deposit.bo.DepositApplyBo" >
-        <id column="did" property="did" jdbcType="BIGINT" />
-        <result column="user_id" property="userId" jdbcType="BIGINT" />
-        <result column="user_name" property="userName" jdbcType="VARCHAR" />
-        <result column="user_phone" property="userPhone" jdbcType="VARCHAR" />
-        <result column="apply_type" property="applyType" jdbcType="SMALLINT" />
-        <result column="apply_amount" property="applyAmount" jdbcType="DECIMAL" />
-        <result column="apply_user_id" property="applyUserId" jdbcType="BIGINT" />
-        <result column="apply_user_name" property="applyUserName" jdbcType="VARCHAR" />
-        <result column="capital_reason_id" property="capitalReasonId" jdbcType="BIGINT" />
-        <result column="capital_reason_name" property="capitalReasonName" jdbcType="VARCHAR" />
-        <result column="apply_node" property="applyNode" jdbcType="VARCHAR" />
-        <result column="user_mode" property="userMode" jdbcType="SMALLINT" />
-        <result column="user_real_name" property="userRealName" jdbcType="VARCHAR" />
-        <result column="user_account" property="userAccount" jdbcType="VARCHAR" />
-        <result column="auditing_state" property="auditingState" jdbcType="SMALLINT" />
-        <result column="auditing_user_name" property="auditingUserName" jdbcType="VARCHAR" />
-        <result column="auditing_user_id" property="auditingUserId" jdbcType="BIGINT" />
-        <result column="auditing_note" property="auditingNote" jdbcType="VARCHAR" />
-        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
-    </resultMap>
-
     <sql id="Base_Column_List" >
         did, user_id, user_name, user_phone, apply_type, apply_amount, apply_user_id, apply_user_name, 
         capital_reason_id, capital_reason_name, apply_node, user_mode, user_real_name, user_account, 
@@ -62,10 +39,6 @@
         where did = #{did,jdbcType=BIGINT}
     </select>
     
-    <select id="getDepositApplyPage" resultMap="gatherMap" >
-        select * from deposit_apply
-    </select>
-
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
         delete from deposit_apply
         where did = #{did,jdbcType=BIGINT}
