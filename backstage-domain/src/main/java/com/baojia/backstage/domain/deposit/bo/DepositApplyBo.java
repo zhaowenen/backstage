@@ -7,7 +7,7 @@ import com.baojia.backstage.domain.common.BaseDto;
 
 /**
 * @Title: DepositApply  
-* @Description: 押金扣款/提现申请表
+* @Description: 押金扣款/提现申请查询列表接口返回
 * @author renjing  
 * @date 2018年5月23日 上午11:38:49
  */
