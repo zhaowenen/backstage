@@ -15,8 +15,13 @@ import com.baojia.backstage.common.exception.MeBikeException;
 import com.baojia.backstage.depositsdk.service.service.DepositApplyService;
 import com.baojia.backstage.depositsdk.service.service.DepositOrderService;
 import com.baojia.backstage.domain.deposit.bo.DepositOrderInfoBo;
+import com.baojia.backstage.domain.deposit.dto.DepositApplyDto;
 import com.baojia.backstage.domain.deposit.dto.DepositOrderDto;
 
+import enums.BaseResult;
+import enums.deposit.DepositConditionType;
+import enums.deposit.DepositPayMethodStatus;
+import enums.deposit.DepositStatus;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -44,7 +49,12 @@ public class DepositController extends AbstractController {
 	// @RequiresPermissions("deposits:orderlist")
 	public Result getDepositOrderList(DepositOrderDto depositOrderDto) {
 		try {
-			if (depositOrderDto.getPageNum() == null || depositOrderDto.getPageSize() == null) {
+			if (depositOrderDto.getPayMethod() != DepositPayMethodStatus.ALIPAY.getType() || 
+					depositOrderDto.getPayMethod() != DepositPayMethodStatus.WECHAT.getType()) {
+				throw new MeBikeException(Result.ERROR_PARAM);
+			}
+			if (depositOrderDto.getStatus() != DepositStatus.PAID.getType() || 
+					depositOrderDto.getStatus() != DepositStatus.WITHDRAW.getType()) {
 				throw new MeBikeException(Result.ERROR_PARAM);
 			}
 			PageUtils list = depositOrderService.selectDepositOrderList(depositOrderDto);
@@ -77,6 +87,25 @@ public class DepositController extends AbstractController {
 			
 			Result res = Result.SUCCESS.copyThis();
 			res.setContext(orderInfo);
+			return res;
+		} catch (Exception e) {
+			return Result.error(e.getMessage());
+		}
+	}
+	
+	@GetMapping(value = "/withDrawHistory", produces = { "application/json;charset=UTF-8" })
+	@ApiOperation(value="押金扣款记录查询列表", notes="根据查询条件查询押金扣款记录列表")
+	@ApiImplicitParam(name = "DepositApplyDto", value = "押金扣款记录复杂对象实体DepositApplyDto", required = false, dataType = "DepositApplyDto")
+	// @RequiresPermissions("deposits:orderlist")
+	public Result getWithDrawHistory(DepositApplyDto depositApplyDto) {
+		try {
+			if (StringUtils.isAnyBlank(depositApplyDto.getConditionType(), depositApplyDto.getKeyWords())) {
+				throw new MeBikeException(Result.ERROR_PARAM);
+			}
+			PageUtils list = depositApplyService.getWithDrawHistory(depositApplyDto);
+			
+			Result res = Result.SUCCESS.copyThis();
+			res.setContext(list);
 			return res;
 		} catch (Exception e) {
 			return Result.error(e.getMessage());

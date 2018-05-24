@@ -58,13 +58,13 @@
     <select id="selectDepositOrderInfo" resultMap="DepositOrderInfoBoMap" parameterType="java.lang.Long" >
     	select o.deposit_order_id, o.status, u.real_name, u.mobile, o.pay_time, o.pay_method, o.order_no, o.refund_time, o.refund_type, a.user_account, a.apply_user_name 
 		from deposit_order o LEFT JOIN users u on o.user_id = u.user_id LEFT JOIN deposit_apply a on o.deposit_order_id = a.deposit_order_id 
-		where o.del_flag != 0 and a.apply_type = 200 and o.deposit_order_id = #{depositOrderId,jdbcType=BIGINT}
+		where o.del_flag != 0 and a.apply_type = 200 and auditing_state = 200 and o.deposit_order_id = #{depositOrderId,jdbcType=BIGINT}
     </select>
     
     <select id="selectDepositOrderWithDrawInfo" resultMap="DepositOrderInfoBoMap" parameterType="java.lang.Long" >
     	select a.apply_user_name, a.apply_amount, a.apply_node, a.create_time
 		from deposit_order o LEFT JOIN deposit_apply a on o.deposit_order_id = a.deposit_order_id 
-		where o.del_flag != 0 and a.apply_type = 300 and o.deposit_order_id = #{depositOrderId,jdbcType=BIGINT}
+		where o.del_flag != 0 and a.apply_type = 300 and auditing_state = 200 and o.deposit_order_id = #{depositOrderId,jdbcType=BIGINT}
     </select>
     
     <select id="selectDepositOrderList" resultMap="DepositOrderBoMap" parameterType="com.baojia.backstage.domain.deposit.dto.DepositOrderDto" >

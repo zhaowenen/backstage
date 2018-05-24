@@ -1,6 +1,5 @@
 package com.baojia.backstage.domain.deposit.dto;
 
-import java.util.Date;
 
 import com.baojia.backstage.domain.common.BaseDto;
 
