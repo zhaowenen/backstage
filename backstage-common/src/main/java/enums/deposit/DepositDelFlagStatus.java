@@ -1,7 +1,12 @@
 package enums.deposit;
 
 import enums.EnumType;
-
+/**
+* @Title: DepositDelFlagStatus  
+* @Description: 押金是否有效状态 
+* @author renjing  
+* @date 2018年5月24日 下午6:15:14
+ */
 public class DepositDelFlagStatus extends EnumType {
 
 	protected DepositDelFlagStatus(int type, String name) {
