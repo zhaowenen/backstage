@@ -17,7 +17,7 @@ spring:
        protocol:
            port: 21866
        registry:
-           address: zookeeper://192.168.35.234:2181
+           address: zookeeper://192.168.32.221:2181
            group: backstage-dev
        scan: com.baojia.backstage.api
     redis:

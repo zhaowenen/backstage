@@ -4,9 +4,10 @@ import java.util.List;
 
 import com.baojia.backstage.depositsdk.service.models.DepositApply;
 import com.baojia.backstage.domain.deposit.bo.DepositApplyBo;
+import com.baojia.backstage.domain.deposit.dto.DepositApplyDto;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 
 public interface DepositApplyMapper extends BaseMapper<DepositApply>{
 	
-	List<DepositApplyBo> getDepositApplyPage();
+	List<DepositApplyBo> selectWithDrawHistory(DepositApplyDto depositApplyDto);
 }
