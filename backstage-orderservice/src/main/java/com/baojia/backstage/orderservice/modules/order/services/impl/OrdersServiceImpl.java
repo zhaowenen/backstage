@@ -38,7 +38,7 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, OrdersEntity> i
      * pageSize 每页显示的数据条数
      * @return
      * */
-    @Override
+    /*@Override*/
     public PageUtils complexOrdersPage(int pageNum, int pageSize) {
         //将参数传给这个方法就可以实现物理分页了，非常简单。
         PageHelper.startPage(pageNum, pageSize);
@@ -55,7 +55,7 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, OrdersEntity> i
      * @author wxr
      * @date 2018/5/23
      */
-    @Override
+    /*@Override*/
     public int closeOrder(Long orderId) {
         OrdersEntity ordersEntity = new OrdersEntity();
         ordersEntity.setOrderId(orderId);
@@ -69,7 +69,7 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, OrdersEntity> i
      * @author wxr
      * @date 2018/5/23
      */
-    @Override
+    /*@Override*/
     public void sendReturnBikeCommand(String bikeNum, String from) {
         Map<String,String> paramMap = new HashMap<String,String>();
         paramMap.put("carId","bee"+bikeNum);
@@ -85,7 +85,7 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, OrdersEntity> i
      * @param orderId 订单编号
      * @return
      */
-    @Override
+    /*@Override*/
     public int cancelOrder(Long orderId){
         OrdersEntity ordersEntity = new OrdersEntity();
         ordersEntity.setOrderId(orderId);

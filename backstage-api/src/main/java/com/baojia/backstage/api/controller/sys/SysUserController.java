@@ -24,15 +24,13 @@ import com.baojia.backstage.common.auth.util.PageUtils;
 import com.baojia.backstage.common.auth.util.R;
 import com.baojia.backstage.common.auth.validator.Assert;
 import com.baojia.backstage.common.auth.validator.ValidatorUtils;
+import com.baojia.backstage.common.auth.validator.group.AddGroup;
+import com.baojia.backstage.common.auth.validator.group.UpdateGroup;
 import com.baojia.backstage.securitysdk.models.SysUserEntity;
 import com.baojia.backstage.securitysdk.services.SysUserRoleService;
 import com.baojia.backstage.securitysdk.services.SysUserService;
-import io.renren.common.validator.group.AddGroup;
-import io.renren.common.validator.group.UpdateGroup;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;

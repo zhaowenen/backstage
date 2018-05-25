@@ -5,6 +5,7 @@ import com.baojia.backstage.api.controller.sys.AbstractController;
 import com.baojia.backstage.common.auth.util.PageUtils;
 import com.baojia.backstage.common.auth.util.R;
 import com.baojia.backstage.domain.order.dto.OrdersDto;
+import com.baojia.backstage.ordersdk.services.IOrdersSearchService;
 import com.baojia.backstage.ordersdk.services.IOrdersService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.*;
 public class OrdersController extends AbstractController {
     @Reference
     private IOrdersService ordersService;
+    @Reference
+    private IOrdersSearchService ordersSearchService;
     /**
      * 订单查询列表
      * @param ordersDto
@@ -32,6 +35,7 @@ public class OrdersController extends AbstractController {
     @RequestMapping(value = "/list", produces = {"application/json;charset=UTF-8"},method = RequestMethod.POST)
     @RequiresPermissions("orders:list")
     public R queryOrderPage(OrdersDto ordersDto){
+        ordersSearchService.saveOrdersSearch();
         PageUtils page1 = ordersService.complexOrdersPage(ordersDto.getPageNum(),ordersDto.getPageSize());
         return R.ok().put("page", page1);
     }
@@ -69,9 +73,33 @@ public class OrdersController extends AbstractController {
      */
     @ApiOperation(value="订单详情", notes="根据订单编号查询订单详情")
     @ApiImplicitParam(name = "orderId", value = "订单编号orderId", required = true, dataType = "Long")
-    @RequestMapping(value = "/cancelOrder", produces = {"application/json;charset=UTF-8"},method = RequestMethod.POST)
-    @RequiresPermissions("orders:cancelOrder")
+    @RequestMapping(value = "/getOrderDetail", produces = {"application/json;charset=UTF-8"},method = RequestMethod.POST)
+    @RequiresPermissions("orders:getOrderDetail")
     public R getOrderDetailById(Long orderId){
         return R.ok();
+    }
+
+    @RequestMapping(value = "/saveOrdersSearch", produces = {"application/json;charset=UTF-8"},method = RequestMethod.POST)
+    public R saveOrdersSearch(){
+        ordersSearchService.saveOrdersSearch();
+        return R.ok();
+    }
+
+    @RequestMapping(value = "/listOrdersSearch", produces = {"application/json;charset=UTF-8"},method = RequestMethod.POST)
+    public R listOrdersSearch(OrdersDto ordersDto){
+        PageUtils page = ordersSearchService.queryOrdersPage(ordersDto);
+        return R.ok().put("page",page);
+    }
+
+    @RequestMapping(value = "/delete", produces = {"application/json;charset=UTF-8"},method = RequestMethod.POST)
+    public R delete(){
+        ordersSearchService.delete();;
+        return R.ok();
+    }
+
+    @RequestMapping(value = "/getUserlastOrderInfo", produces = {"application/json;charset=UTF-8"},method = RequestMethod.POST)
+    public R getUserlastOrderInfo(){
+        int orderId = ordersSearchService.getUserlastOrderInfo(1);
+        return R.ok().put("orderId",orderId);
     }
 }

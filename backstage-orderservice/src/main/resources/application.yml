@@ -37,8 +37,13 @@ spring:
         protocol:
             port: 20882
         scan: com.baojia.backstage.orderservice.modules.order.services.impl
-
-
+    #elasticsearch
+    data:
+      elasticsearch:
+        cluster-name: kafka #节点名字，默认elasticsearch
+        cluster-nodes: 10.1.11.147:9300 #节点地址，多个节点用逗号隔开
+        repositories:
+          enabled: true
 
 
 
@@ -88,11 +93,12 @@ pagehelper:
   params: count=countSql
   returnPageInfo: check
 
-
+#闭锁指令地址
 lock:
   bike:
     command:
       url: http://47.95.48.208:83/simulate/service
+
 
 
 
