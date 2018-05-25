@@ -109,7 +109,7 @@
 	</insert>
 
 	<insert id="insertSelective"
-		parameterType="com.baojia.backstage.depositsdk.service.models.DepositApply">
+		parameterType="com.baojia.backstage.depositsdk.service.models.DepositApply" useGeneratedKeys="true" >
 		insert into deposit_apply
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="did != null">

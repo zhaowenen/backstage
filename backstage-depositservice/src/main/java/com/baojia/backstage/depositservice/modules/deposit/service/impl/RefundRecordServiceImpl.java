@@ -11,10 +11,11 @@ import com.baojia.backstage.depositsdk.service.service.RefundRecordService;
 import com.baojia.backstage.depositservice.datasources.DataSourceNames;
 import com.baojia.backstage.depositservice.datasources.DynamicDataSource;
 import com.baojia.backstage.depositservice.modules.deposit.dao.RefundRecordMapper;
-import com.baomidou.mybatisplus.annotations.DataSource;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 
-import enums.deposit.DepositPayMethodStatus;
+import order.RefundMethod;
+import order.RefundStatus;
+import order.RefundType;
 
 /**
 * @Title: RefundRecordServiceImpl  
@@ -27,16 +28,18 @@ import enums.deposit.DepositPayMethodStatus;
 public class RefundRecordServiceImpl  extends ServiceImpl<RefundRecordMapper, RefundRecord> implements RefundRecordService{
 
 	@Override
-	public void withdrawDeposit(Long depositOrderId) {
+	public void withdrawDeposit(String realName, BigDecimal amount, Integer refundType, String userAccount) {
 		DynamicDataSource.setDataSource(DataSourceNames.SECOND);
+		
 		RefundRecord refundRecord = new RefundRecord();
 		refundRecord.setOrderNo("test001");
 		refundRecord.setRefundAmount(new BigDecimal(299));
-		refundRecord.setRefundMethod(DepositPayMethodStatus.WECHAT.getType());
-		refundRecord.setRefundType(2);
-		refundRecord.setRefundStatus(0);
+		refundRecord.setRefundMethod(RefundMethod.WECHAT.getType());
+		refundRecord.setRefundType(RefundType.DEPOSIT.getType());
+		refundRecord.setRefundStatus(RefundStatus.UN_REFUND.getType());
 		refundRecord.setCreateTime(new Date());
 		baseMapper.insert(refundRecord);
+		
 		DynamicDataSource.clearDataSource();
 	}
 

@@ -1,12 +1,12 @@
 package com.baojia.backstage.depositsdk.service.service;
 
 
-import java.util.List;
+import java.math.BigDecimal;
 
 import com.baojia.backstage.depositsdk.service.models.RefundRecord;
 import com.baomidou.mybatisplus.service.IService;
 
 public interface RefundRecordService extends IService<RefundRecord>{
 	
-	void withdrawDeposit(Long depositOrderId);
+	void withdrawDeposit(String realName, BigDecimal amount, Integer refundType, String userAccount);
 }
