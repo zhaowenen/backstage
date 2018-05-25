@@ -31,10 +31,6 @@ public class DepositOrderDto extends BaseDto {
 	 */
 	private Integer payMethod;
 
-	/**
-	 * 用户手机号
-	 */
-	private String mobile;
 
 	public Integer getStatus() {
 		return status;
@@ -66,14 +62,6 @@ public class DepositOrderDto extends BaseDto {
 
 	public void setPayMethod(Integer payMethod) {
 		this.payMethod = payMethod;
-	}
-
-	public String getMobile() {
-		return mobile;
-	}
-
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
 	}
 
 }

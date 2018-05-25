@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baojia.backstage.depositservice.modules.deposit.dao.RefundRecordMapper" >
+
+    <resultMap id="BaseResultMap" type="com.baojia.backstage.depositsdk.service.models.RefundRecord" >
+        <id column="refund_id" property="refundId" jdbcType="BIGINT" />
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+        <result column="refund_type" property="refundType" jdbcType="INTEGER" />
+        <result column="refund_status" property="refundStatus" jdbcType="INTEGER" />
+        <result column="refund_amount" property="refundAmount" jdbcType="DECIMAL" />
+        <result column="out_trade_no" property="outTradeNo" jdbcType="VARCHAR" />
+        <result column="refund_time" property="refundTime" jdbcType="TIMESTAMP" />
+        <result column="refund_method" property="refundMethod" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+        <result column="user_id" property="userId" jdbcType="BIGINT" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        refund_id, order_no, refund_type, refund_status, refund_amount, out_trade_no, refund_time, 
+        refund_method, create_time, modify_time, user_id
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select 
+        <include refid="Base_Column_List" />
+        from refund_record
+        where refund_id = #{refundId,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+        delete from refund_record
+        where refund_id = #{refundId,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.baojia.backstage.depositsdk.service.models.RefundRecord" >
+        insert into refund_record (refund_id, order_no, refund_type, 
+            refund_status, refund_amount, out_trade_no, 
+            refund_time, refund_method, create_time, 
+            modify_time, user_id)
+        values (#{refundId,jdbcType=BIGINT}, #{orderNo,jdbcType=VARCHAR}, #{refundType,jdbcType=INTEGER}, 
+            #{refundStatus,jdbcType=INTEGER}, #{refundAmount,jdbcType=DECIMAL}, #{outTradeNo,jdbcType=VARCHAR}, 
+            #{refundTime,jdbcType=TIMESTAMP}, #{refundMethod,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+            #{modifyTime,jdbcType=TIMESTAMP}, #{userId,jdbcType=BIGINT})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.baojia.backstage.depositsdk.service.models.RefundRecord" >
+        insert into refund_record
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="refundId != null" >
+                refund_id,
+            </if>
+            <if test="orderNo != null" >
+                order_no,
+            </if>
+            <if test="refundType != null" >
+                refund_type,
+            </if>
+            <if test="refundStatus != null" >
+                refund_status,
+            </if>
+            <if test="refundAmount != null" >
+                refund_amount,
+            </if>
+            <if test="outTradeNo != null" >
+                out_trade_no,
+            </if>
+            <if test="refundTime != null" >
+                refund_time,
+            </if>
+            <if test="refundMethod != null" >
+                refund_method,
+            </if>
+            <if test="createTime != null" >
+                create_time,
+            </if>
+            <if test="modifyTime != null" >
+                modify_time,
+            </if>
+            <if test="userId != null" >
+                user_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="refundId != null" >
+                #{refundId,jdbcType=BIGINT},
+            </if>
+            <if test="orderNo != null" >
+                #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="refundType != null" >
+                #{refundType,jdbcType=INTEGER},
+            </if>
+            <if test="refundStatus != null" >
+                #{refundStatus,jdbcType=INTEGER},
+            </if>
+            <if test="refundAmount != null" >
+                #{refundAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="outTradeNo != null" >
+                #{outTradeNo,jdbcType=VARCHAR},
+            </if>
+            <if test="refundTime != null" >
+                #{refundTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="refundMethod != null" >
+                #{refundMethod,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null" >
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null" >
+                #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userId != null" >
+                #{userId,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.baojia.backstage.depositsdk.service.models.RefundRecord" >
+        update refund_record
+        <set >
+            <if test="orderNo != null" >
+                order_no = #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="refundType != null" >
+                refund_type = #{refundType,jdbcType=INTEGER},
+            </if>
+            <if test="refundStatus != null" >
+                refund_status = #{refundStatus,jdbcType=INTEGER},
+            </if>
+            <if test="refundAmount != null" >
+                refund_amount = #{refundAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="outTradeNo != null" >
+                out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+            </if>
+            <if test="refundTime != null" >
+                refund_time = #{refundTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="refundMethod != null" >
+                refund_method = #{refundMethod,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null" >
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null" >
+                modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userId != null" >
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+        </set>
+        where refund_id = #{refundId,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.baojia.backstage.depositsdk.service.models.RefundRecord" >
+        update refund_record
+        set order_no = #{orderNo,jdbcType=VARCHAR},
+            refund_type = #{refundType,jdbcType=INTEGER},
+            refund_status = #{refundStatus,jdbcType=INTEGER},
+            refund_amount = #{refundAmount,jdbcType=DECIMAL},
+            out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+            refund_time = #{refundTime,jdbcType=TIMESTAMP},
+            refund_method = #{refundMethod,jdbcType=INTEGER},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+            user_id = #{userId,jdbcType=BIGINT}
+        where refund_id = #{refundId,jdbcType=BIGINT}
+    </update>
+</mapper>

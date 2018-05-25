@@ -49,11 +49,14 @@ public class DepositController extends AbstractController {
 	// @RequiresPermissions("deposits:orderlist")
 	public Result getDepositOrderList(DepositOrderDto depositOrderDto) {
 		try {
-			if (depositOrderDto.getPayMethod() != DepositPayMethodStatus.ALIPAY.getType() || 
+			if (depositOrderDto.getPayMethod() == null || depositOrderDto.getStatus() == null) {
+				throw new MeBikeException(Result.ERROR_PARAM);
+			}
+			if (depositOrderDto.getPayMethod() != DepositPayMethodStatus.ALIPAY.getType() && 
 					depositOrderDto.getPayMethod() != DepositPayMethodStatus.WECHAT.getType()) {
 				throw new MeBikeException(Result.ERROR_PARAM);
 			}
-			if (depositOrderDto.getStatus() != DepositStatus.PAID.getType() || 
+			if (depositOrderDto.getStatus() != DepositStatus.PAID.getType() && 
 					depositOrderDto.getStatus() != DepositStatus.WITHDRAW.getType()) {
 				throw new MeBikeException(Result.ERROR_PARAM);
 			}
