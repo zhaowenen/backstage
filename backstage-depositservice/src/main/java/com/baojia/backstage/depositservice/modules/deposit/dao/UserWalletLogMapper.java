@@ -1,18 +1,8 @@
 package com.baojia.backstage.depositservice.modules.deposit.dao;
 
 import com.baojia.backstage.depositsdk.service.models.UserWalletLog;
+import com.baomidou.mybatisplus.mapper.BaseMapper;
 
-public interface UserWalletLogMapper {
+public interface UserWalletLogMapper extends BaseMapper<UserWalletLog>{
 	
-	int deleteByPrimaryKey(Long id);
-
-	int insert(UserWalletLog record);
-
-	int insertSelective(UserWalletLog record);
-
-	UserWalletLog selectByPrimaryKey(Long id);
-
-	int updateByPrimaryKeySelective(UserWalletLog record);
-
-	int updateByPrimaryKey(UserWalletLog record);
 }
