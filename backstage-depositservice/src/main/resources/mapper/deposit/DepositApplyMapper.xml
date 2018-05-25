@@ -52,7 +52,7 @@
 		from deposit_apply
 		where apply_type = 300 and auditing_state = 200
 		<choose>
-        	<when test="conditionType == 'opUser'">
+        	<when test="conditionType == 'opsUser'">
             	and apply_user_name = #{keyWords,jdbcType=VARCHAR}
             </when>
             <when test="conditionType == 'userName'">
@@ -62,7 +62,7 @@
                 and user_phone = #{keyWords,jdbcType=VARCHAR}
             </when>
             <otherwise>
-                and  1=1
+                and  1=0
             </otherwise>
         </choose>
 		<if test="startTime != null">
