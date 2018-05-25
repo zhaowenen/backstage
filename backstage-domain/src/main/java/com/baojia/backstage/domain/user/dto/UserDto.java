@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @Description: 传输对象，前端调用时传输
  * @date 2018/5/22 17:10
  */
-public class UserDto extends BaseDto implements Serializable{
+public class UserDto extends BaseDto{
     private Integer veriftyStatus;//实名状态   1未认证 2 身份证认证认证通过 3人脸对比
     private Integer lockStatus;//押金状态 1未锁定 2锁定
     private  String registerCityCode;//城市码

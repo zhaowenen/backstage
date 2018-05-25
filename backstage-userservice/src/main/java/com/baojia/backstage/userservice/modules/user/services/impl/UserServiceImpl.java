@@ -2,7 +2,9 @@ package com.baojia.backstage.userservice.modules.user.services.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.baojia.backstage.common.auth.util.PageUtils;
+import com.baojia.backstage.domain.user.bo.UserDetailBo;
 import com.baojia.backstage.domain.user.bo.UserInfoBo;
+import com.baojia.backstage.domain.user.bo.UserOperateLogBo;
 import com.baojia.backstage.domain.user.dto.UserDto;
 import com.baojia.backstage.usersdk.models.UserEntity;
 import com.baojia.backstage.usersdk.models.UserOperateLogEntity;
@@ -11,6 +13,7 @@ import com.baojia.backstage.usersdk.models.UserWalletLogEntity;
 import com.baojia.backstage.usersdk.services.IUserService;
 import com.baojia.backstage.userservice.common.utils.OkHttpUtil;
 import com.baojia.backstage.userservice.modules.user.dao.UserCouponMapper;
+import com.baojia.backstage.userservice.modules.user.dao.UserDetailMapper;
 import com.baojia.backstage.userservice.modules.user.dao.UserMapper;
 import com.baojia.backstage.userservice.modules.user.dao.UserWalletMapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
@@ -47,6 +50,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
 
     @Autowired
     private UserWalletMapper userWalletMapper;
+
+    @Autowired
+    private UserDetailMapper userDetailMapper;
 
     /**
      * 条件分页查询用户管理页面
@@ -151,6 +157,79 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         return flag;
     }
 
+    /**
+     * 获取用户详细信息
+     * @param userId
+     * @return
+     */
+    @Override
+    public UserDetailBo getUserDetail(String userId) {
+        UserDetailBo userDetailBo = userDetailMapper.selectUserDatail(userId);
+        return userDetailBo;
+    }
+
+    /**
+     * 分页获取用户拉黑记录
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @Override
+    public PageUtils pageUerBlackLog(int pageNum, int pageSize,String userId) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<UserOperateLogBo> userOperateList = userDetailMapper.listUserBlackLog(userId);
+        PageInfo<UserOperateLogBo> pageInfo = new PageInfo<UserOperateLogBo>(userOperateList);
+        PageUtils page = new PageUtils(pageInfo.getList(), (int)pageInfo.getTotal(), pageInfo.getPageSize(), pageInfo.getPageNum());
+        return page;
+    }
+
+    /**
+     * 分页获取用户锁定记录
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @Override
+    public PageUtils pageUserLockLog(int pageNum, int pageSize,String userId) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<UserOperateLogBo> userOperateList = userDetailMapper.listUserLockLog(userId);
+        PageInfo<UserOperateLogBo> pageInfo = new PageInfo<UserOperateLogBo>(userOperateList);
+        PageUtils page = new PageUtils(pageInfo.getList(), (int)pageInfo.getTotal(), pageInfo.getPageSize(), pageInfo.getPageNum());
+        return page;
+    }
+
+    /**
+     * 分页获取用户押金记录
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @Override
+    public PageUtils pageUserDepositLog(int pageNum, int pageSize,String userId) {
+        return null;
+    }
+
+    /**
+     * 分页获取用户出行券记录
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @Override
+    public PageUtils pageUserCouponLog(int pageNum, int pageSize,String userId) {
+        return null;
+    }
+
+    /**
+     * 分页获取 用户约记录
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @Override
+    public PageUtils pageUserBalanceLog(int pageNum, int pageSize,String userId) {
+        return null;
+    }
 
     /**
      * 增加用户操作记录
@@ -211,23 +290,4 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     }
 
 
-    @Override
-    public PageUtils pageInfo(int pageNum, int pageSize) {
-
-        //将参数传给这个方法就可以实现物理分页了，非常简单。
-        PageHelper.startPage(pageNum, pageSize);
-        List<UserEntity> userList = baseMapper.selectAll();
-        PageInfo<UserEntity> pageInfo = new PageInfo<UserEntity>(userList);
-        PageUtils page = new PageUtils(pageInfo.getList(), (int)pageInfo.getTotal(), pageInfo.getPageSize(), pageInfo.getPageNum());
-        return page;
-    }
-
-    @Override
-    public PageUtils pageInfoByMap(int pageNum, int pageSize, Map<String, Object> param) {
-        PageHelper.startPage(pageNum, pageSize);
-        List<UserEntity> userList = baseMapper.selectByMap(param);
-        PageInfo<UserEntity> pageInfo = new PageInfo<UserEntity>(userList);
-        PageUtils page = new PageUtils(pageInfo.getList(), (int)pageInfo.getTotal(), pageInfo.getPageSize(), pageInfo.getPageNum());
-        return page;
-    }
 }

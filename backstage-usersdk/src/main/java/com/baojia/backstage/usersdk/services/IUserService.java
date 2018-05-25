@@ -1,6 +1,7 @@
 package com.baojia.backstage.usersdk.services;
 
 import com.baojia.backstage.common.auth.util.PageUtils;
+import com.baojia.backstage.domain.user.bo.UserDetailBo;
 import com.baojia.backstage.domain.user.dto.UserDto;
 import com.baojia.backstage.usersdk.models.UserEntity;
 import com.baomidou.mybatisplus.service.IService;
@@ -15,11 +16,6 @@ import java.util.Map;
  */
 public interface IUserService extends IService<UserEntity> {
 
-    PageUtils  pageInfo(int pageNum, int pageSize);
-
-
-    PageUtils  pageInfoByMap(int pageNum, int pageSize, Map<String,Object> param);
-
     PageUtils pageUserInfoBo(int pageNum, int pageSize,UserDto userDto);
 
     boolean lockUserDeposit(String userId,String remarks);
@@ -29,4 +25,19 @@ public interface IUserService extends IService<UserEntity> {
     boolean pullBlack(String userId,String remarks);
 
     boolean liftBlack(String userId);
+
+    UserDetailBo getUserDetail(String userId);
+
+    PageUtils pageUerBlackLog(int pageNum, int pageSize,String userId);
+
+    PageUtils pageUserLockLog(int pageNum, int pageSize,String userId);
+
+    PageUtils pageUserDepositLog(int pageNum, int pageSize,String userId);
+
+    PageUtils pageUserCouponLog(int pageNum, int pageSize,String userId);
+
+    PageUtils pageUserBalanceLog(int pageNum, int pageSize,String userId);
+
+
+
 }

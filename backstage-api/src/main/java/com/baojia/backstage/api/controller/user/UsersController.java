@@ -4,7 +4,9 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.baojia.backstage.api.controller.sys.AbstractController;
 import com.baojia.backstage.common.auth.util.PageUtils;
 import com.baojia.backstage.common.auth.util.R;
+import com.baojia.backstage.domain.user.bo.UserDetailBo;
 import com.baojia.backstage.domain.user.dto.UserDto;
+import com.baojia.backstage.domain.user.dto.UserOperateDto;
 import com.baojia.backstage.usersdk.services.IUserService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -52,13 +54,15 @@ public class UsersController extends AbstractController {
             @ApiImplicitParam(name = "remarks", value = "锁定押金原因", required = false, dataType = "String")})*/
     @PostMapping(value = "/operateDepositStatus", produces = {"application/json;charset=UTF-8"})
    // @RequiresPermissions("users:operateDepositStatus")
-    public R operateDepositStatus(@RequestParam(value = "userId", required = true) String userId,
-                         @RequestParam(value = "remarks", required = false) String remarks){
+    public R operateDepositStatus(UserOperateDto userOperateDto){
         boolean flag = false;
-        if(StringUtils.isBlank(remarks)){
-            flag =  userService.unlockUserDeposit(userId);
+        if(StringUtils.isBlank(userOperateDto.getUserId()) || StringUtils.isBlank(userOperateDto.getOperateName())){
+            throw  new IllegalArgumentException("请求参数异常");
+        }
+        if(StringUtils.isBlank(userOperateDto.getRemarks())){
+            flag =  userService.unlockUserDeposit(userOperateDto.getUserId());
         }else{
-            flag =  userService.lockUserDeposit(userId,remarks);
+            flag =  userService.lockUserDeposit(userOperateDto.getUserId(),userOperateDto.getRemarks());
         }
        return  flag?R.ok():R.error();
     }
@@ -69,17 +73,94 @@ public class UsersController extends AbstractController {
             @ApiImplicitParam(name = "remarks", value = "锁定押金原因", required = false, dataType = "String")})*/
     @PostMapping(value = "/operateUserBlackStatus", produces = {"application/json;charset=UTF-8"})
     // @RequiresPermissions("users:operateDepositStatus")
-    public R operateUserBlackStatus(@RequestParam(value = "userId", required = true) String userId,
-                                  @RequestParam(value = "remarks", required = false) String remarks) {
+    public R operateUserBlackStatus(UserOperateDto userOperateDto) {
         boolean flag = false;
-        if (StringUtils.isBlank(remarks)) {
-            flag = userService.liftBlack(userId);
+        if(StringUtils.isBlank(userOperateDto.getUserId()) || StringUtils.isBlank(userOperateDto.getOperateName())){
+            throw  new IllegalArgumentException("请求参数异常");
+        }
+        if (StringUtils.isBlank(userOperateDto.getRemarks())) {
+            flag = userService.liftBlack(userOperateDto.getUserId());
         } else {
-            flag = userService.pullBlack(userId, remarks);
+            flag = userService.pullBlack(userOperateDto.getUserId(), userOperateDto.getRemarks());
         }
         return flag ? R.ok() : R.error();
     }
 
+
+    @ApiOperation(value="获取用户详细信息", notes="获取用户详细信息")
+   /* @ApiImplicitParams({  @ApiImplicitParam(name = "userId", value = "用户id", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "remarks", value = "锁定押金原因", required = false, dataType = "String")})*/
+    @PostMapping(value = "/getUserDeatil", produces = {"application/json;charset=UTF-8"})
+    // @RequiresPermissions("users:operateDepositStatus")
+    public R getUserDeatil(@RequestParam(value = "userId", required = true) String userId) {
+        UserDetailBo userDetailBo = userService.getUserDetail(userId);
+        return R.ok().put("userDeatail", userDetailBo);
+    }
+    @ApiOperation(value="获取用户拉黑记录", notes="分页获取用户拉黑记录")
+   /* @ApiImplicitParams({  @ApiImplicitParam(name = "userId", value = "用户id", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "remarks", value = "锁定押金原因", required = false, dataType = "String")})*/
+    @PostMapping(value = "/getUerBlackLog", produces = {"application/json;charset=UTF-8"})
+    // @RequiresPermissions("users:operateDepositStatus")
+    public R getUerBlackLog(
+            @RequestParam(value = "userId", required = true) String userId,
+            @RequestParam(value = "pageNum", required = false,defaultValue = "1") int pageNum,
+            @RequestParam(value = "pageSize", required = false,defaultValue = "10") int pageSize) {
+        PageUtils page =  userService.pageUerBlackLog(pageNum,pageSize,userId);
+        return R.ok().put("page", page);
+    }
+
+    @ApiOperation(value="获取用户锁定记录", notes="分页获取用户锁定记录")
+   /* @ApiImplicitParams({  @ApiImplicitParam(name = "userId", value = "用户id", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "remarks", value = "锁定押金原因", required = false, dataType = "String")})*/
+    @PostMapping(value = "/getUserLockLog", produces = {"application/json;charset=UTF-8"})
+    // @RequiresPermissions("users:operateDepositStatus")
+    public R getUserLockLog(
+            @RequestParam(value = "userId", required = true) String userId,
+            @RequestParam(value = "pageNum", required = false,defaultValue = "1") int pageNum,
+            @RequestParam(value = "pageSize", required = false,defaultValue = "10") int pageSize) {
+        PageUtils page =  userService.pageUserLockLog(pageNum,pageSize,userId);
+        return R.ok().put("page", page);
+    }
+
+    @ApiOperation(value="获取用户押金记录", notes="分页获取用户押金记录")
+   /* @ApiImplicitParams({  @ApiImplicitParam(name = "userId", value = "用户id", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "remarks", value = "锁定押金原因", required = false, dataType = "String")})*/
+    @PostMapping(value = "/getUserDepositLog", produces = {"application/json;charset=UTF-8"})
+    // @RequiresPermissions("users:operateDepositStatus")
+    public R getUserDepositLog(
+            @RequestParam(value = "userId", required = true) String userId,
+            @RequestParam(value = "pageNum", required = false,defaultValue = "1") int pageNum,
+            @RequestParam(value = "pageSize", required = false,defaultValue = "10") int pageSize) {
+        PageUtils page =  userService.pageUserDepositLog(pageNum,pageSize,userId);
+        return R.ok().put("page", page);
+    }
+
+
+      @ApiOperation(value="获取用户出行券记录", notes="分页获取用户出行券记录")
+   /* @ApiImplicitParams({  @ApiImplicitParam(name = "userId", value = "用户id", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "remarks", value = "锁定押金原因", required = false, dataType = "String")})*/
+    @PostMapping(value = "/getUserCouponLog", produces = {"application/json;charset=UTF-8"})
+    // @RequiresPermissions("users:operateDepositStatus")
+    public R getUserCouponLog(
+            @RequestParam(value = "userId", required = true) String userId,
+            @RequestParam(value = "pageNum", required = false,defaultValue = "1") int pageNum,
+            @RequestParam(value = "pageSize", required = false,defaultValue = "10") int pageSize) {
+        PageUtils page =  userService.pageUserCouponLog(pageNum,pageSize,userId);
+        return R.ok().put("page", page);
+    }
+
+    @ApiOperation(value="获取用户出余额记录", notes="分页获取用户余额记录")
+   /* @ApiImplicitParams({  @ApiImplicitParam(name = "userId", value = "用户id", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "remarks", value = "锁定押金原因", required = false, dataType = "String")})*/
+    @PostMapping(value = "/getUserBalanceLog", produces = {"application/json;charset=UTF-8"})
+    // @RequiresPermissions("users:operateDepositStatus")
+    public R getUserBalanceLog(
+            @RequestParam(value = "userId", required = true) String userId,
+            @RequestParam(value = "pageNum", required = false,defaultValue = "1") int pageNum,
+            @RequestParam(value = "pageSize", required = false,defaultValue = "10") int pageSize) {
+        PageUtils page =  userService.pageUserBalanceLog(pageNum,pageSize,userId);
+        return R.ok().put("page", page);
+    }
 
 
    /* *//**
