@@ -46,7 +46,7 @@ public class DepositOrderInfoBo implements Serializable{
     private Integer payMethod;
 
     /**
-     * 提现方式(1:原路退款)
+     * 提现方式(1:APP原路提现，2:APP转账提现，3:后台提现，4:后台转账提现)
      */
     private Integer refundType;
 

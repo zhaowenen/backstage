@@ -1,8 +1,15 @@
 package com.baojia.backstage.api.controller.deposit;
 
 
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,14 +19,17 @@ import com.baojia.backstage.api.controller.sys.AbstractController;
 import com.baojia.backstage.common.auth.util.PageUtils;
 import com.baojia.backstage.common.auth.util.Result;
 import com.baojia.backstage.common.exception.MeBikeException;
+import com.baojia.backstage.depositsdk.service.models.DepositOrder;
+import com.baojia.backstage.depositsdk.service.models.RefundRecord;
 import com.baojia.backstage.depositsdk.service.service.DepositApplyService;
 import com.baojia.backstage.depositsdk.service.service.DepositOrderService;
+import com.baojia.backstage.depositsdk.service.service.RefundRecordService;
 import com.baojia.backstage.domain.deposit.bo.DepositOrderInfoBo;
 import com.baojia.backstage.domain.deposit.dto.DepositApplyDto;
 import com.baojia.backstage.domain.deposit.dto.DepositOrderDto;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
 
-import enums.BaseResult;
-import enums.deposit.DepositConditionType;
 import enums.deposit.DepositPayMethodStatus;
 import enums.deposit.DepositStatus;
 import io.swagger.annotations.ApiImplicitParam;
@@ -41,6 +51,8 @@ public class DepositController extends AbstractController {
 	private DepositApplyService depositApplyService;
 	@Reference
 	private DepositOrderService depositOrderService;
+	@Reference 
+	private RefundRecordService refundRecordService;
 
 	
 	@GetMapping(value = "/orderlist", produces = { "application/json;charset=UTF-8" })
@@ -49,11 +61,14 @@ public class DepositController extends AbstractController {
 	// @RequiresPermissions("deposits:orderlist")
 	public Result getDepositOrderList(DepositOrderDto depositOrderDto) {
 		try {
-			if (depositOrderDto.getPayMethod() != DepositPayMethodStatus.ALIPAY.getType() || 
+			if (depositOrderDto.getPayMethod() == null || depositOrderDto.getStatus() == null) {
+				throw new MeBikeException(Result.ERROR_PARAM);
+			}
+			if (depositOrderDto.getPayMethod() != DepositPayMethodStatus.ALIPAY.getType() && 
 					depositOrderDto.getPayMethod() != DepositPayMethodStatus.WECHAT.getType()) {
 				throw new MeBikeException(Result.ERROR_PARAM);
 			}
-			if (depositOrderDto.getStatus() != DepositStatus.PAID.getType() || 
+			if (depositOrderDto.getStatus() != DepositStatus.PAID.getType() && 
 					depositOrderDto.getStatus() != DepositStatus.WITHDRAW.getType()) {
 				throw new MeBikeException(Result.ERROR_PARAM);
 			}
@@ -77,7 +92,7 @@ public class DepositController extends AbstractController {
 				throw new MeBikeException(Result.ERROR_PARAM);
 			}
 			DepositOrderInfoBo orderInfo = depositOrderService.getDepositOrderInfo(depositOrderId);
-			DepositOrderInfoBo withDrawInfo = depositOrderService.getDepositOrderWithDrawInfo(depositOrderId);
+			DepositOrderInfoBo withDrawInfo = depositOrderService.getDepositOrderWithDrawInfo(depositOrderId);//获取退款详情
 			if(withDrawInfo != null) {
 				orderInfo.setOpsUser(withDrawInfo.getOpsUser());
 				orderInfo.setDeductAmount(withDrawInfo.getDeductAmount());
@@ -93,7 +108,8 @@ public class DepositController extends AbstractController {
 		}
 	}
 	
-	@GetMapping(value = "/withDrawHistory", produces = { "application/json;charset=UTF-8" })
+	
+	@GetMapping(value = "/getWithDrawHistory", produces = { "application/json;charset=UTF-8" })
 	@ApiOperation(value="押金扣款记录查询列表", notes="根据查询条件查询押金扣款记录列表")
 	@ApiImplicitParam(name = "DepositApplyDto", value = "押金扣款记录复杂对象实体DepositApplyDto", required = false, dataType = "DepositApplyDto")
 	// @RequiresPermissions("deposits:orderlist")
@@ -106,6 +122,25 @@ public class DepositController extends AbstractController {
 			
 			Result res = Result.SUCCESS.copyThis();
 			res.setContext(list);
+			return res;
+		} catch (Exception e) {
+			return Result.error(e.getMessage());
+		}
+	}
+	
+	
+	@PutMapping(value = "/withdrawDeposit", produces = { "application/json;charset=UTF-8" })
+	@ApiOperation(value="押金提现", notes="押金提现")
+	// @RequiresPermissions("deposits:orderlist")
+	public Result withdrawDeposit(@ApiParam(name="depositOrderId",value="押金ID",required=true) @RequestParam("depositOrderId") Long  depositOrderId) {
+		try {
+			if (depositOrderId == null) {
+				throw new MeBikeException(Result.ERROR_PARAM);
+			}
+			Map<String, Object> map = depositOrderService.selectMap(new EntityWrapper<DepositOrder>().eq("deposit_order_id", depositOrderId));
+//			refundRecordService.withdrawDeposit();
+			Result res = Result.SUCCESS.copyThis();
+			res.setContext(map);
 			return res;
 		} catch (Exception e) {
 			return Result.error(e.getMessage());

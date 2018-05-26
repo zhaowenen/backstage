@@ -16,6 +16,8 @@
         <module>backstage-domain</module>
         <module>backstage-depositservice</module>
         <module>backstage-depositsdk</module>
+        <module>backstage-userservice</module>
+        <module>backstage-usersdk</module>
     </modules>
 
 

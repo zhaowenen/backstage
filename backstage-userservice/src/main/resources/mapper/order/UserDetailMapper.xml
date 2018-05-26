@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baojia.backstage.userservice.modules.user.dao.UserDetailMapper">
+
+    <resultMap id="userDeatilMap" type="com.baojia.backstage.domain.user.bo.UserDetailBo">
+        <result column="user_id" property="userId"/>
+        <result column="real_name" property="realName"/>
+        <result column="mobile" property="mobile"/>
+        <result column="register_city_code" property="registerCityCode"/>
+        <result column="register_time" property="registerTime"/>
+        <result column="register_ad_code" property="registerAdCode"/>
+        <result column="verifty_status" property="veriftyStatus"/>
+        <result column="recharge_status" property="rechargeStatus"/>
+        <result column="lock_status" property="lockStatus"/>
+        <result column="black_status" property="blackStatus"/>
+        <result column="recharge_amount" property="rechargeAmount"/>
+        <result column="give_amount" property="giveAmount"/>
+        <result column="mi_coin_amount" property="miCoinAmount"/>
+        <result column="app_version" property="appVersion"/>
+    </resultMap>
+
+    <resultMap id="userOperateLogMap" type="com.baojia.backstage.domain.user.bo.UserOperateLogBo">
+        <result column="id" property="id"/>
+        <result column="operate_time" property="operateTime"/>
+        <result column="operate_user" property="operateUser"/>
+        <result column="remarks" property="remarks"/>
+        <result column="operate_type" property="operateType"/>
+    </resultMap>
+
+
+    <select id="selectUserDatail" parameterType="string" resultMap="userDeatilMap">
+      select u.user_id ,u.real_name ,u.mobile ,u.register_city_code ,u.register_time ,u.register_ad_code ,u.verifty_status ,uw.recharge_status ,uw.lock_status ,u.black_status ,
+      uw.give_amount ,uw.mi_coin_amount ,u.app_version
+      from users u LEFT JOIN user_wallet uw on u.user_id = uw.user_id where u.user_id =#{userId}
+    </select>
+
+    <select id="listUserOperateLog" parameterType="string" resultMap="userOperateLogMap">
+        select lid id , operate_type,operate_user,remarks ,create_time operate_time from user_operate_log where
+        user_id = #{userId} and  operate_type in (${typeInfo})
+    </select>
+
+
+
+
+</mapper>

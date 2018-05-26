@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baojia.backstage.userservice.modules.user.dao.UserWalletMapper">
+
+    <resultMap id="userWalletLogMap" type="com.baojia.backstage.usersdk.models.UserWalletLogEntity">
+        <id column="id"  property="id" />
+        <result column="user_id"  property="userId" />
+        <result column="recharge_status"  property="rechargeStatus" />
+        <result column="deposit_amount"  property="depositAmount" />
+        <result column="deposit_amount _change"  property="depositAmountChange" />
+        <result column="lock_status"  property="lockStatus" />
+        <result column="deposit_from" property="depositFrom" />
+        <result column="deposit_time"  property="depositTime" />
+        <result column="city_code" property="cityCode" />
+        <result column="ad_code"  property="adCode" />
+        <result column="mi_coin_amount"  property="miCoinAmount" />
+        <result column="mi_coin_amount_change"  property="miCoinAmountChange" />
+        <result column="recharge_amount"  property="rechargeAmount" />
+        <result column="recharge_amount_change"  property="rechargeAmountChange" />
+        <result column="give_amount"  property="giveAmount" />
+        <result column="give_amount _change"  property="giveAmountChange" />
+        <result column="order_no" property="orderNo" />
+        <result column="type"  property="type" />
+        <result column="del_flag"  property="delFlag" />
+        <result column="create_time"  property="createTime" />
+        <result column="modify_time"  property="modifyTime" />
+        <result column="remarks"  property="remarks" />
+    </resultMap>
+    <resultMap id="userWalletEntityMap" type="com.baojia.backstage.usersdk.models.UserWalletEntity">
+        <id column="id"  property="id" />
+        <result column="user_id"  property="userId" />
+        <result column="recharge_status" property="rechargeStatus" />
+        <result column="deposit_amount" property="depositAmount" />
+        <result column="lock_status"  property="lockStatus" />
+        <result column="deposit_from"  property="depositFrom" />
+        <result column="deposit_time" property="depositTime" />
+        <result column="city_code"  property="cityCode" />
+        <result column="ad_code"  property="adCode" />
+        <result column="mi_coin_amount"  property="miCoinAmount" />
+        <result column="recharge_amount"  property="rechargeAmount" />
+        <result column="give_amount"  property="giveAmount" />
+        <result column="del_flag" property="delFlag" />
+        <result column="create_time"  property="createTime" />
+        <result column="modify_time"  property="modifyTime" />
+    </resultMap>
+    <select id="selectByUserIdForUpdate" parameterType="string" resultMap="userWalletEntityMap">
+        select *  from user_wallet
+        where user_id = #{userId} for UPDATE
+    </select>
+
+    <update id="updateUserWallet" parameterType="com.baojia.backstage.usersdk.models.UserWalletEntity">
+        update user_wallet
+        set
+        recharge_status = #{rechargeStatus},
+        deposit_amount = #{depositAmount},
+        lock_status = #{lockStatus},
+        deposit_from = #{depositFrom},
+        deposit_time = #{depositTime},
+        city_code = #{cityCode},
+        ad_code = #{adCode},
+        mi_coin_amount = #{miCoinAmount},
+        recharge_amount = #{rechargeAmount},
+        give_amount = #{giveAmount},
+        del_flag = #{delFlag}
+        where  user_id = #{userId}
+    </update>
+
+    <insert id="insertUserWalletLog" parameterType="com.baojia.backstage.usersdk.models.UserWalletLogEntity">
+        insert into user_wallet_log (user_id, recharge_status,
+        deposit_amount, deposit_amount_change, lock_status,
+        deposit_from, deposit_time, city_code,
+        ad_code, mi_coin_amount, mi_coin_amount_change,
+        recharge_amount, recharge_amount_change, give_amount,
+        give_amount_change, order_no, `type`,
+        del_flag,
+        remarks)
+        values ( #{userId}, #{rechargeStatus},
+        #{depositAmount}, #{depositAmountChange}, #{lockStatus},
+        #{depositFrom}, #{depositTime}, #{cityCode},
+        #{adCode}, #{miCoinAmount}, #{miCoinAmountChange},
+        #{rechargeAmount}, #{rechargeAmountChange}, #{giveAmount},
+        #{giveAmountChange}, #{orderNo}, #{type}, #{delFlag},  #{remarks})
+    </insert>
+
+</mapper>

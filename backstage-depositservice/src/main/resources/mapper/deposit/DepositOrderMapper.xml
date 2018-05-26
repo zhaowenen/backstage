@@ -72,14 +72,16 @@
 		from deposit_order o LEFT JOIN users u on o.user_id = u.user_id 
 		<where>
 				o.del_flag != 0 
-			<if test="mobile != null">
-				and u.mobile = #{mobile,jdbcType=VARCHAR}
-			</if>
 			<if test="status != null">
 				and o.status = #{status,jdbcType=INTEGER}
 			</if>
 			<if test="payMethod != null">
 				and o.pay_method = #{payMethod,jdbcType=INTEGER}
+			</if>
+			<if test="keyWords != null and keyWords != ''">
+				and u.mobile = #{keyWords,jdbcType=VARCHAR}
+				or u.real_name = #{keyWords,jdbcType=VARCHAR}
+				or o.order_no = #{keyWords,jdbcType=VARCHAR}
 			</if>
 			<if test="startTime != null">
 				and o.recharge_time <![CDATA[ >= ]]> #{startTime,jdbcType=DATE}

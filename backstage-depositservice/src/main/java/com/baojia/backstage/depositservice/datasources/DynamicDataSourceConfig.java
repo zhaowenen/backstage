@@ -26,25 +26,25 @@ public class DynamicDataSourceConfig {
         return DruidDataSourceBuilder.create().build();
     }
 
-    /*@Bean
+    @Bean
     @ConfigurationProperties("spring.datasource.druid.second")
     public DataSource secondDataSource(){
         return DruidDataSourceBuilder.create().build();
-    }*/
-
-    @Bean
-    @Primary
-    public DynamicDataSource dataSource(DataSource firstDataSource) {
-        Map<Object, Object> targetDataSources = new HashMap<>();
-        targetDataSources.put(DataSourceNames.FIRST, firstDataSource);
-        return new DynamicDataSource(firstDataSource, targetDataSources);
     }
-    /*@Bean
+
+//    @Bean
+//    @Primary
+//    public DynamicDataSource dataSource(DataSource firstDataSource) {
+//        Map<Object, Object> targetDataSources = new HashMap<>();
+//        targetDataSources.put(DataSourceNames.FIRST, firstDataSource);
+//        return new DynamicDataSource(firstDataSource, targetDataSources);
+//    }
+    @Bean
     @Primary
     public DynamicDataSource dataSource(DataSource firstDataSource, DataSource secondDataSource) {
         Map<Object, Object> targetDataSources = new HashMap<>();
         targetDataSources.put(DataSourceNames.FIRST, firstDataSource);
-        *//*targetDataSources.put(DataSourceNames.SECOND, secondDataSource);*//*
+        targetDataSources.put(DataSourceNames.SECOND, secondDataSource);
         return new DynamicDataSource(firstDataSource, targetDataSources);
-    }*/
+    }
 }
