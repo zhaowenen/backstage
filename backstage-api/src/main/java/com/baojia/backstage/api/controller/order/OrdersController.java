@@ -6,7 +6,7 @@ import com.baojia.backstage.common.auth.util.PageUtils;
 import com.baojia.backstage.common.auth.util.R;
 import com.baojia.backstage.domain.order.dto.OrdersDto;
 import com.baojia.backstage.ordersdk.services.IOrdersSearchService;
-import com.baojia.backstage.ordersdk.services.IOrdersService;
+import com.baojia.backstage.usersdk.services.IOrdersService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -21,10 +21,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("orders")
 public class OrdersController extends AbstractController {
-    @Reference
+  @Reference
     private IOrdersService ordersService;
     @Reference
     private IOrdersSearchService ordersSearchService;
+
     /**
      * 订单查询列表
      * @param ordersDto
@@ -40,7 +41,7 @@ public class OrdersController extends AbstractController {
         return R.ok().put("page", page1);
     }
 
-    /**
+   /**
      * 人工还车 调用APPserver的人工还车(人工还车先发闭锁指令，在调用APPserver的结束订单服务)
      * @param orderId 订单编号
      * @return

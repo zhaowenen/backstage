@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baojia.backstage.userservice.modules.user.dao.UserMapper">
+
+    <resultMap id="userMap" type="com.baojia.backstage.usersdk.models.UserEntity">
+        <result column="user_id" property="userId"/>
+        <result column="nick_name" property="nickName"/>
+        <result column="real_name" property="realName"/>
+        <result column="mobile" property="mobile"/>
+        <result column="email" property="email"/>
+        <result column="sex" property="sex"/>
+        <result column="head_url" property="headUrl"/>
+        <result column="register_ip" property="registerIp"/>
+        <result column="register_time" property="registerTime"/>
+        <result column="register_city_code" property="registerCityCode"/>
+        <result column="register_ad_code" property="registerAdCode"/>
+        <result column="last_login_ip" property="lastLoginIp"/>
+        <result column="last_login_time" property="lastLoginTime"/>
+        <result column="last_login_city_code" property="lastLoginCityCode"/>
+        <result column="last_login_ad_code" property="lastLoginAdCode"/>
+        <result column="from_app" property="fromApp"/>
+        <result column="device_type" property="deviceType"/>
+        <result column="device_code" property="deviceCode"/>
+        <result column="device_model" property="deviceModel"/>
+        <result column="app_version" property="appVersion"/>
+        <result column="verifty_status" property="veriftyStatus"/>
+        <result column="black_status" property="blackStatus"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
+    </resultMap>
+
+    <resultMap id="userInfoMap" type="com.baojia.backstage.domain.user.bo.UserInfoBo">
+        <result column="user_id" property="userId"/>
+        <result column="real_name" property="realName"/>
+        <result column="mobile" property="mobile"/>
+        <result column="register_time" property="registerTime"/>
+        <result column="register_city_code" property="registerCityCode"/>
+        <result column="verifty_status" property="veriftyStatus"/>
+        <result column="from_app" property="fromApp"/>
+        <result column="black_status" property="blackStatus"/>
+        <result column="lock_status" property="lockStatus"/>
+        <result column="mi_coin_amount" property="miCoinAmount"/>
+    </resultMap>
+
+
+    <select id="selectAll" resultMap="userMap">
+        select * from users
+    </select>
+
+    <select id="listByUserDto" resultMap="userInfoMap" parameterType="com.baojia.backstage.domain.user.dto.UserDto">
+          SELECT
+                u.user_id,u.real_name, u.mobile,u.register_time, u.register_city_code,u.verifty_status,u.from_app,u.black_status,uw.lock_status,
+                uw.mi_coin_amount
+            FROM
+                users u
+           LEFT JOIN user_wallet uw ON u.user_id = uw.user_id
+          <where>
+             <if test="veriftyStatus != null">
+                 u.verifty_status = #{veriftyStatus}
+             </if>
+             <if test="lockStatus != null">
+                 uw.lock_status = #{lockStatus}
+             </if>
+             <if test="registerCityCode != null and registerCityCode !=''">
+                 u.register_city_code = #{registerCityCode}
+             </if>
+             <if test="fromApp != null">
+                 u.from_app = #{fromApp}
+             </if>
+             <if test="userId != null and userId !=''">
+                 u.user_id = #{userId}
+             </if>
+             <if test="realNamae != null and realNamae !=''">
+                 u.real_name = #{realNamae}
+             </if>
+             <if test="mobile != null and mobile !=''">
+                 u.mobile = #{mobile}
+             </if>
+             <if test="beginTime != null and endTime != '' ">
+                 and register_time &gt;=#{beginTime}
+             </if>
+             <if test="endTime != null and endTime != '' ">
+                 and register_time &lt;=#{endTime}
+             </if>
+         </where>
+    </select>
+
+    <select id="selectByUserIdForUpdate" parameterType="string" resultMap="userMap">
+        select  * from users where user_id = #{userId} for UPDATE
+    </select>
+
+    <update id="updateUserEntity" parameterType="com.baojia.backstage.usersdk.models.UserEntity">
+        update users
+        set nick_name = #{nickName},
+        mobile = #{mobile},
+        real_name = #{realName},
+        email = #{email},
+        sex = #{sex},
+        head_url = #{headUrl},
+        register_ip = #{registerIp},
+        register_time = #{registerTime},
+        register_city_code = #{registerCityCode},
+        register_ad_code = #{registerAdCode},
+        last_login_ip = #{lastLoginIp},
+        last_login_time = #{lastLoginTime},
+        last_login_city_code = #{lastLoginCityCode},
+        last_login_ad_code = #{lastLoginAdCode},
+        from_app = #{fromApp},
+        device_type = #{deviceType},
+        device_code = #{deviceCode},
+        device_model = #{deviceModel},
+        app_version = #{appVersion},
+        verifty_status = #{veriftyStatus},
+        black_status = #{blackStatus},
+        del_flag = #{delFlag}
+        where user_id = #{userId}
+    </update>
+
+    <insert id="insertUserOperateLog" parameterType="com.baojia.backstage.usersdk.models.UserOperateLogEntity">
+        insert into user_operate_log ( user_id, operate_type,
+        operate_old_text, operate_new_text, del_flag ,remarks  )
+        values (#{userId}, #{operateType},#{operateOldText}, #{operateNewText}, #{delFlag}, #{remarks})
+    </insert>
+
+
+
+
+
+</mapper>
