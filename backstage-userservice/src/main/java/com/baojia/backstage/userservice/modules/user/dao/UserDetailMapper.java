@@ -23,9 +23,8 @@ public interface UserDetailMapper extends BaseMapper<UserDetailBo> {
 
    UserDetailBo selectUserDatail(String userId);
 
-   List<UserOperateLogBo> listUserBlackLog(String userId);
 
-   List<UserOperateLogBo> listUserLockLog(String userId);
+   List<UserOperateLogBo> listUserOperateLog(Map<String,String> param);
 
 
 

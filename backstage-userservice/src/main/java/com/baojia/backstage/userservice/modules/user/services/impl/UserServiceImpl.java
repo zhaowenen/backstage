@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -84,12 +85,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     public boolean lockUserDeposit(String userId,String remarks) {
         boolean flag = false;
-        Integer type = 6;//锁定押金
+        Integer type = 3;//锁定押金
         UserWalletEntity userWalletEntity =  userWalletMapper.selectByUserIdForUpdate(userId);
         if(userWalletEntity != null && userWalletEntity.getLockStatus() ==1){
             userWalletEntity.setLockStatus(2);
             userWalletMapper.updateUserWallet(userWalletEntity);
-            this.addWalletLog(userWalletEntity,type,remarks);
+            this.addOperateUserLog(userWalletEntity.getUserId(),type,remarks);
             flag = true;
         }
         return flag;
@@ -104,12 +105,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     public boolean unlockUserDeposit(String userId) {
         boolean flag = false;
-        Integer type = 5;//解锁押金
+        Integer type = 4;//解锁押金
         UserWalletEntity userWalletEntity =  userWalletMapper.selectByUserIdForUpdate(userId);
         if(userWalletEntity != null && userWalletEntity.getLockStatus() ==2){
             userWalletEntity.setLockStatus(1);
             userWalletMapper.updateUserWallet(userWalletEntity);
-            this.addWalletLog(userWalletEntity,type,"");
+            this.addOperateUserLog(userWalletEntity.getUserId(),type,"");
             flag = true;
         }
         return flag;
@@ -131,7 +132,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         if(user != null && user.getBlackStatus()!=2){
             user.setBlackStatus(2);//拉黑状态
             baseMapper.updateUserEntity(user);
-            this.addOperateUserLog(user,type,remarks);
+            this.addOperateUserLog(user.getUserId(),type,remarks);
             flag = true;
         }
         return flag;
@@ -151,7 +152,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         if(user != null && user.getBlackStatus()!=1){
             user.setBlackStatus(1);//解锁拉黑状态
             baseMapper.updateUserEntity(user);
-            this.addOperateUserLog(user,type,"");
+            this.addOperateUserLog(user.getUserId(),type,"");
             flag = true;
         }
         return flag;
@@ -177,7 +178,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     @Override
     public PageUtils pageUerBlackLog(int pageNum, int pageSize,String userId) {
         PageHelper.startPage(pageNum, pageSize);
-        List<UserOperateLogBo> userOperateList = userDetailMapper.listUserBlackLog(userId);
+        Map<String,String> param = new HashMap<>();
+        param.put("userId",userId);
+        param.put("typeInfo","'1','2'");
+        List<UserOperateLogBo> userOperateList = userDetailMapper.listUserOperateLog(param);
         PageInfo<UserOperateLogBo> pageInfo = new PageInfo<UserOperateLogBo>(userOperateList);
         PageUtils page = new PageUtils(pageInfo.getList(), (int)pageInfo.getTotal(), pageInfo.getPageSize(), pageInfo.getPageNum());
         return page;
@@ -192,7 +196,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     @Override
     public PageUtils pageUserLockLog(int pageNum, int pageSize,String userId) {
         PageHelper.startPage(pageNum, pageSize);
-        List<UserOperateLogBo> userOperateList = userDetailMapper.listUserLockLog(userId);
+        Map<String,String> param = new HashMap<>();
+        param.put("userId",userId);
+        param.put("typeInfo","'3','4'");
+        List<UserOperateLogBo> userOperateList = userDetailMapper.listUserOperateLog(param);
         PageInfo<UserOperateLogBo> pageInfo = new PageInfo<UserOperateLogBo>(userOperateList);
         PageUtils page = new PageUtils(pageInfo.getList(), (int)pageInfo.getTotal(), pageInfo.getPageSize(), pageInfo.getPageNum());
         return page;
@@ -221,7 +228,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     }
 
     /**
-     * 分页获取 用户约记录
+     * 分页获取 用户余额记录
      * @param pageNum
      * @param pageSize
      * @return
@@ -233,32 +240,46 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
 
     /**
      * 增加用户操作记录
-     * @param user
+     * @param userId
      * @param type
      * @param remarks
      */
-    private void addOperateUserLog(UserEntity user, Integer type, String remarks) {
+    private void addOperateUserLog(String userId, Integer type, String remarks) {
         UserOperateLogEntity userOperateLogEntity = new UserOperateLogEntity();
-        userOperateLogEntity.setUserId(user.getUserId());
+        userOperateLogEntity.setUserId(userId);
         userOperateLogEntity.setOperateType(type);
         userOperateLogEntity.setDelFlag(1);
         userOperateLogEntity.setRemarks(remarks);
-        if(type ==1){
-            userOperateLogEntity.setOperateOldText("未拉黑");
-            userOperateLogEntity.setOperateNewText("拉黑");
-        }else if(type ==2){
-            userOperateLogEntity.setOperateOldText("拉黑");
-            userOperateLogEntity.setOperateNewText("未拉黑");
+        switch (type){
+            case 1:
+                userOperateLogEntity.setOperateOldText("未拉黑");
+                userOperateLogEntity.setOperateNewText("拉黑");
+                break;
+            case 2:
+                userOperateLogEntity.setOperateOldText("拉黑");
+                userOperateLogEntity.setOperateNewText("未拉黑");
+                break;
+            case 3:
+                userOperateLogEntity.setOperateOldText("押金未锁定");
+                userOperateLogEntity.setOperateNewText("押金锁定");
+                break;
+            case 4:
+                userOperateLogEntity.setOperateOldText("押金锁定");
+                userOperateLogEntity.setOperateNewText("解锁押金");
+                break;
         }
         baseMapper.insertUserOperateLog(userOperateLogEntity);
     }
+/*
 
-    /**
+    */
+/**
      * 增加用户操作押金记录
      * @param userWalletEntity
      * @param type
      * @param remarks
-     */
+     *//*
+
     private void addWalletLog(UserWalletEntity userWalletEntity, Integer type, String remarks) {
         UserWalletLogEntity uwel = new UserWalletLogEntity();
         BigDecimal changeMone = new BigDecimal(0);
@@ -288,6 +309,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         }
         userWalletMapper.insertUserWalletLog(uwel);
     }
+*/
 
 
 }

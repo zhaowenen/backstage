@@ -20,7 +20,7 @@ public class UserOperateLogEntity implements Serializable {
      * Column: user_operate_log.user_id
      @mbggenerated 2018-05-24 21:37:19
      */
-    private Long userId;
+    private String userId;
 
     /**
      *   操作类型 1:拉黑操作 2:解除拉黑操作
@@ -85,11 +85,11 @@ public class UserOperateLogEntity implements Serializable {
         this.lid = lid;
     }
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

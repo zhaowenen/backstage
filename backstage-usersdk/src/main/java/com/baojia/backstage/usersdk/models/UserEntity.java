@@ -14,7 +14,7 @@ public class UserEntity implements Serializable {
      * Column: users.user_id
      @mbggenerated 2018-05-23 15:56:12
      */
-    private Long userId;
+    private String userId;
 
     /**
      *   用户昵称
@@ -194,11 +194,11 @@ public class UserEntity implements Serializable {
     }
 
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

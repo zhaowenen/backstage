@@ -21,7 +21,7 @@ public class UserWalletEntity implements Serializable {
      * Column: user_wallet.user_id
     @mbggenerated 2018-05-24 16:56:21
      */
-    private Long userId;
+    private String userId;
 
     /**
      *   ��ֵѺ��״̬(1:�ѽ�,2:δ��)
@@ -128,11 +128,11 @@ public class UserWalletEntity implements Serializable {
         this.id = id;
     }
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
