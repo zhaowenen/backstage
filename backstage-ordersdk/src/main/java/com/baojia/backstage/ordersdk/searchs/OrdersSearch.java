@@ -2,8 +2,8 @@ package com.baojia.backstage.ordersdk.searchs;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
-
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -14,9 +14,8 @@ import java.util.Date;
  */
 @Document(indexName = "orders", replicas = 0, refreshInterval = "-1")
 public class OrdersSearch implements Serializable{
-    @Id //相当于mysql的主键
-    private Long id;
-    private Integer orderId;
+    @Id
+    private Long orderId;
     private Integer orderType;//下单类型 1-预约 2-扫码
     private String orderNo;//订单号--
     private Integer userId;//用户id
@@ -36,35 +35,26 @@ public class OrdersSearch implements Serializable{
     private String userReturnAdress;//还车时手机位置
     private Date returnBikeTime;//还车时间
     //费用信息
-    private Double orderAmount;//应收订单总费用
-    private Double timeAmount;//时长费用
-    private Double mileageAmount;//里程费用
-    private Double activityAmount;//活动抵扣金额
-    private Double couponAmount;//优惠券抵扣金额
+    private BigDecimal orderAmount;//应收订单总费用
+    private BigDecimal timeAmount;//时长费用
+    private BigDecimal mileageAmount;//里程费用
+    private BigDecimal activityAmount;//活动抵扣金额
+    private BigDecimal couponAmount;//优惠券抵扣金额
     private Long couponId;//优惠券id
-    private Double payAmount;//支付金额
+    private Integer payAmount;//支付金额
 
     //订单支付记录
     private Integer paymentType;//支付方式100-用车 200-充值押金 300-充值蜜币
     private String outTradeNo;//商户订单号
-    private Double giveMiAmount;//蜜币支付时花费赠送蜜币数量
-    private Double miAmount;//蜜币支付时花费充值蜜币数量
+    private BigDecimal giveMiAmount;//蜜币支付时花费赠送蜜币数量
+    private BigDecimal miAmount;//蜜币支付时花费充值蜜币数量
 
 
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Integer getOrderId() {
+    public Long getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(Integer orderId) {
+    public void setOrderId(Long orderId) {
         this.orderId = orderId;
     }
 
@@ -196,43 +186,43 @@ public class OrdersSearch implements Serializable{
         this.returnBikeTime = returnBikeTime;
     }
 
-    public Double getOrderAmount() {
+    public BigDecimal getOrderAmount() {
         return orderAmount;
     }
 
-    public void setOrderAmount(Double orderAmount) {
+    public void setOrderAmount(BigDecimal orderAmount) {
         this.orderAmount = orderAmount;
     }
 
-    public Double getTimeAmount() {
+    public BigDecimal getTimeAmount() {
         return timeAmount;
     }
 
-    public void setTimeAmount(Double timeAmount) {
+    public void setTimeAmount(BigDecimal timeAmount) {
         this.timeAmount = timeAmount;
     }
 
-    public Double getMileageAmount() {
+    public BigDecimal getMileageAmount() {
         return mileageAmount;
     }
 
-    public void setMileageAmount(Double mileageAmount) {
+    public void setMileageAmount(BigDecimal mileageAmount) {
         this.mileageAmount = mileageAmount;
     }
 
-    public Double getActivityAmount() {
+    public BigDecimal getActivityAmount() {
         return activityAmount;
     }
 
-    public void setActivityAmount(Double activityAmount) {
+    public void setActivityAmount(BigDecimal activityAmount) {
         this.activityAmount = activityAmount;
     }
 
-    public Double getCouponAmount() {
+    public BigDecimal getCouponAmount() {
         return couponAmount;
     }
 
-    public void setCouponAmount(Double couponAmount) {
+    public void setCouponAmount(BigDecimal couponAmount) {
         this.couponAmount = couponAmount;
     }
 
@@ -244,11 +234,11 @@ public class OrdersSearch implements Serializable{
         this.couponId = couponId;
     }
 
-    public Double getPayAmount() {
+    public Integer getPayAmount() {
         return payAmount;
     }
 
-    public void setPayAmount(Double payAmount) {
+    public void setPayAmount(Integer payAmount) {
         this.payAmount = payAmount;
     }
 
@@ -268,19 +258,19 @@ public class OrdersSearch implements Serializable{
         this.outTradeNo = outTradeNo;
     }
 
-    public Double getGiveMiAmount() {
+    public BigDecimal getGiveMiAmount() {
         return giveMiAmount;
     }
 
-    public void setGiveMiAmount(Double giveMiAmount) {
+    public void setGiveMiAmount(BigDecimal giveMiAmount) {
         this.giveMiAmount = giveMiAmount;
     }
 
-    public Double getMiAmount() {
+    public BigDecimal getMiAmount() {
         return miAmount;
     }
 
-    public void setMiAmount(Double miAmount) {
+    public void setMiAmount(BigDecimal miAmount) {
         this.miAmount = miAmount;
     }
 
@@ -295,8 +285,7 @@ public class OrdersSearch implements Serializable{
     @Override
     public String toString() {
         return "OrdersSearch{" +
-                "id=" + id +
-                ",orderId=" + orderId +
+                "orderId=" + orderId +
                 ", orderType=" + orderType +
                 ", orderNo='" + orderNo + '\'' +
                 ", userName='" + userName + '\'' +

@@ -2,6 +2,7 @@ package com.baojia.backstage.ordersdk.services;
 
 import com.baojia.backstage.common.auth.util.PageUtils;
 import com.baojia.backstage.domain.order.dto.OrdersDto;
+import com.baojia.backstage.ordersdk.searchs.OrdersSearch;
 
 /**
  * @author wxr
@@ -30,6 +31,16 @@ public interface IOrdersSearchService {
 　　* @author wxr
 　　* @date 2018-05-24
 　　*/
-    Integer getUserlastOrderInfo(int userId);
+    Long getUserlastOrderInfo(int userId);
+
     void delete();
+    /**
+ 　　* @Description: 根据订单id查询订单详情
+ 　　* @param userId 用户id
+ 　　* @return Integer
+ 　　* @throws
+ 　　* @author wxr
+ 　　* @date 2018-05-24
+ 　　*/
+    OrdersSearch getOrderDetail(Long orderId);
 }

@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.baojia.backstage.orderservice.modules.order.dao.OrdersOperateMapper">
+    <!--根据订单号查询订单操作信息-->
+    <select id="listOrderOperateByOid" parameterType="java.util.Map" resultType="com.baojia.backstage.ordersdk.models.OrdersOperateEntity">
+        select * from orders_operate_#{num} where order_no=#{orderNo}
+    </select>
 </mapper>

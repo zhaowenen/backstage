@@ -2,81 +2,81 @@ package com.baojia.backstage.ordersdk.models;
 
 import com.baomidou.mybatisplus.annotations.TableName;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @author wxr
- * @Title: 订单操作表
- * @Description: ${todo}
- * @date 2018/5/2214:20
+ * [STRATO MyBatis Generator]
+ * Table: orders_operate_0
+ @mbggenerated do_not_delete_during_merge 2018-05-26 10:47:14
  */
 @TableName("orders_operate")
-public class OrdersOperateEntity {
+public class OrdersOperateEntity implements Serializable {
     /**
-     * Column: orders_operate.id
-     @mbggenerated 2018-05-22 13:57:34
+     * Column: orders_operate_0.id
+     @mbggenerated 2018-05-26 10:47:14
      */
     private Long id;
 
     /**
      *   订单号
-     * Column: orders_operate.order_no
-     @mbggenerated 2018-05-22 13:57:34
+     * Column: orders_operate_0.order_no
+     @mbggenerated 2018-05-26 10:47:14
      */
     private String orderNo;
 
     /**
      *   用户id
-     * Column: orders_operate.user_id
-     @mbggenerated 2018-05-22 13:57:34
+     * Column: orders_operate_0.user_id
+     @mbggenerated 2018-05-26 10:47:14
      */
     private Long userId;
 
     /**
      *   车辆id
-     * Column: orders_operate.bike_id
-     @mbggenerated 2018-05-22 13:57:34
+     * Column: orders_operate_0.bike_id
+     @mbggenerated 2018-05-26 10:47:14
      */
     private Long bikeId;
 
     /**
      *   操作类型 预约、开锁、用户还车、后台还车、锁车
-     * Column: orders_operate.operate_type
-     @mbggenerated 2018-05-22 13:57:34
+     * Column: orders_operate_0.operate_type
+     @mbggenerated 2018-05-26 10:47:14
      */
     private Integer operateType;
 
     /**
      *   操作结果
-     * Column: orders_operate.operate_result
-     @mbggenerated 2018-05-22 13:57:34
+     * Column: orders_operate_0.operate_result
+     @mbggenerated 2018-05-26 10:47:14
      */
     private String operateResult;
 
     /**
      *   操作备注
-     * Column: orders_operate.operate_note
-     @mbggenerated 2018-05-22 13:57:34
+     * Column: orders_operate_0.operate_note
+     @mbggenerated 2018-05-26 10:47:14
      */
     private String operateNote;
 
     /**
      *   创建时间
-     * Column: orders_operate.create_time
-     @mbggenerated 2018-05-22 13:57:34
+     * Column: orders_operate_0.create_time
+     @mbggenerated 2018-05-26 10:47:14
      */
     private Date createTime;
 
     /**
      *   修改时间
-     * Column: orders_operate.modify_time
-     @mbggenerated 2018-05-22 13:57:34
+     * Column: orders_operate_0.modify_time
+     @mbggenerated 2018-05-26 10:47:14
      */
     private Date modifyTime;
 
     /**
-     * Table: orders_operate
-     @mbggenerated 2018-05-22 13:57:34
+     * Table: orders_operate_0
+     @mbggenerated 2018-05-26 10:47:14
      */
     private static final long serialVersionUID = 1L;
 

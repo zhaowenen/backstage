@@ -2,158 +2,194 @@ package com.baojia.backstage.ordersdk.models;
 
 import com.baomidou.mybatisplus.annotations.TableName;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * @author wxr
- * @Title: 订单表
- * @date 2018/5/22 14:02
+ * [STRATO MyBatis Generator]
+ * Table: orders_0
+ @mbggenerated do_not_delete_during_merge 2018-05-26 10:47:12
  */
 @TableName("orders")
-public class OrdersEntity{
+public class OrdersEntity implements Serializable {
     /**
-     * Column: orders.order_id
-     @mbggenerated 2018-05-22 13:57:34
+     * Column: orders_0.order_id
+     @mbggenerated 2018-05-26 10:47:12
      */
     private Long orderId;
 
     /**
      *   订单号
-     * Column: orders.order_no
-     @mbggenerated 2018-05-22 13:57:34
+     * Column: orders_0.order_no
+     @mbggenerated 2018-05-26 10:47:12
      */
     private String orderNo;
 
     /**
      *   用户id
-     * Column: orders.user_id
-     @mbggenerated 2018-05-22 13:57:34
+     * Column: orders_0.user_id
+     @mbggenerated 2018-05-26 10:47:12
      */
     private Long userId;
 
     /**
      *   车辆id
-     * Column: orders.bike_id
-     @mbggenerated 2018-05-22 13:57:34
+     * Column: orders_0.bike_id
+     @mbggenerated 2018-05-26 10:47:12
      */
     private Long bikeId;
 
     /**
-     *   订单状态
-     * Column: orders.order_status
-     @mbggenerated 2018-05-22 13:57:34
+     *   订单状态 100-已预约 200-已取车 300-已还车 400-已取消
+     * Column: orders_0.order_status
+     @mbggenerated 2018-05-26 10:47:12
      */
     private Integer orderStatus;
 
     /**
+     *   取消类型 100-用户取消 200-人工取消 300-超时取消 400-扫码不是本车辆导致的取消
+     * Column: orders_0.cancel_type
+     @mbggenerated 2018-05-26 10:47:12
+     */
+    private Integer cancelType;
+
+    /**
+     *   还车类型 100-用户还车 200-人工还车
+     * Column: orders_0.return_type
+     @mbggenerated 2018-05-26 10:47:12
+     */
+    private Integer returnType;
+
+    /**
+     *   下单类型 1-预约用车 2-扫码用车
+     * Column: orders_0.order_type
+     @mbggenerated 2018-05-26 10:47:12
+     */
+    private Integer orderType;
+
+    /**
      *   订单金额
-     * Column: orders.order_amount
-     @mbggenerated 2018-05-22 13:57:34
+     * Column: orders_0.order_amount
+     @mbggenerated 2018-05-26 10:47:12
      */
     private BigDecimal orderAmount;
 
     /**
      *   支付状态 0-未支付 100支付成功
-     * Column: orders.pay_status
-     @mbggenerated 2018-05-22 13:57:34
+     * Column: orders_0.pay_status
+     @mbggenerated 2018-05-26 10:47:12
      */
     private Integer payStatus;
 
     /**
-     *   支付方式 1 -微信 2 -支付宝 3 - 蜜币
-     * Column: orders.pay_method
-     @mbggenerated 2018-05-22 13:57:34
+     *   支付方式 100 -微信 200 -支付宝 300 - 蜜币
+     * Column: orders_0.pay_method
+     @mbggenerated 2018-05-26 10:47:12
      */
     private Integer payMethod;
 
     /**
      *   支付金额
-     * Column: orders.pay_amount
-     @mbggenerated 2018-05-22 13:57:34
+     * Column: orders_0.pay_amount
+     @mbggenerated 2018-05-26 10:47:12
      */
     private Integer payAmount;
 
     /**
      *   支付时间
-     * Column: orders.pay_time
-     @mbggenerated 2018-05-22 13:57:34
+     * Column: orders_0.pay_time
+     @mbggenerated 2018-05-26 10:47:12
      */
     private Date payTime;
 
     /**
      *   运营区id
-     * Column: orders.operate_id
-     @mbggenerated 2018-05-22 13:57:34
+     * Column: orders_0.operate_id
+     @mbggenerated 2018-05-26 10:47:12
      */
     private Long operateId;
 
     /**
      *   公司id
-     * Column: orders.company_id
-     @mbggenerated 2018-05-22 13:57:34
+     * Column: orders_0.company_id
+     @mbggenerated 2018-05-26 10:47:12
      */
     private Long companyId;
 
     /**
      *   城市code
-     * Column: orders.city_code
-     @mbggenerated 2018-05-22 13:57:34
+     * Column: orders_0.city_code
+     @mbggenerated 2018-05-26 10:47:12
      */
     private String cityCode;
 
     /**
      *   县区code
-     * Column: orders.ad_code
-     @mbggenerated 2018-05-22 13:57:34
+     * Column: orders_0.ad_code
+     @mbggenerated 2018-05-26 10:47:12
      */
     private String adCode;
 
     /**
      *   活动id
-     * Column: orders.activity_id
-     @mbggenerated 2018-05-22 13:57:34
+     * Column: orders_0.activity_id
+     @mbggenerated 2018-05-26 10:47:12
      */
     private Long activityId;
 
     /**
      *   活动抵扣金额
-     * Column: orders.activity_amount
-     @mbggenerated 2018-05-22 13:57:34
+     * Column: orders_0.activity_amount
+     @mbggenerated 2018-05-26 10:47:12
      */
     private BigDecimal activityAmount;
 
     /**
      *   优惠券id
-     * Column: orders.coupon_id
-     @mbggenerated 2018-05-22 13:57:34
+     * Column: orders_0.coupon_id
+     @mbggenerated 2018-05-26 10:47:12
      */
     private Long couponId;
 
     /**
      *   优惠券抵扣金额
-     * Column: orders.coupon_amount
-     @mbggenerated 2018-05-22 13:57:34
+     * Column: orders_0.coupon_amount
+     @mbggenerated 2018-05-26 10:47:12
      */
     private BigDecimal couponAmount;
 
     /**
+     *   蜜币支付时花费赠送蜜币数量
+     * Column: orders_0.give_mi_amount
+     @mbggenerated 2018-05-26 10:47:12
+     */
+    private BigDecimal giveMiAmount;
+
+    /**
+     *   蜜币支付时花费充值蜜币数量
+     * Column: orders_0.mi_amount
+     @mbggenerated 2018-05-26 10:47:12
+     */
+    private BigDecimal miAmount;
+
+    /**
      *   创建时间
-     * Column: orders.create_time
-     @mbggenerated 2018-05-22 13:57:34
+     * Column: orders_0.create_time
+     @mbggenerated 2018-05-26 10:47:12
      */
     private Date createTime;
 
     /**
      *   修改时间
-     * Column: orders.modify_time
-     @mbggenerated 2018-05-22 13:57:34
+     * Column: orders_0.modify_time
+     @mbggenerated 2018-05-26 10:47:12
      */
     private Date modifyTime;
 
     /**
-     * Table: orders
-     @mbggenerated 2018-05-22 13:57:34
+     * Table: orders_0
+     @mbggenerated 2018-05-26 10:47:12
      */
     private static final long serialVersionUID = 1L;
 
@@ -195,6 +231,30 @@ public class OrdersEntity{
 
     public void setOrderStatus(Integer orderStatus) {
         this.orderStatus = orderStatus;
+    }
+
+    public Integer getCancelType() {
+        return cancelType;
+    }
+
+    public void setCancelType(Integer cancelType) {
+        this.cancelType = cancelType;
+    }
+
+    public Integer getReturnType() {
+        return returnType;
+    }
+
+    public void setReturnType(Integer returnType) {
+        this.returnType = returnType;
+    }
+
+    public Integer getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(Integer orderType) {
+        this.orderType = orderType;
     }
 
     public BigDecimal getOrderAmount() {
@@ -299,6 +359,22 @@ public class OrdersEntity{
 
     public void setCouponAmount(BigDecimal couponAmount) {
         this.couponAmount = couponAmount;
+    }
+
+    public BigDecimal getGiveMiAmount() {
+        return giveMiAmount;
+    }
+
+    public void setGiveMiAmount(BigDecimal giveMiAmount) {
+        this.giveMiAmount = giveMiAmount;
+    }
+
+    public BigDecimal getMiAmount() {
+        return miAmount;
+    }
+
+    public void setMiAmount(BigDecimal miAmount) {
+        this.miAmount = miAmount;
     }
 
     public Date getCreateTime() {

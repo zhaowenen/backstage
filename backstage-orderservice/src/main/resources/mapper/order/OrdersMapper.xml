@@ -14,7 +14,12 @@
   </resultMap>
 
   <!--关联查询订单的分页信息-->
-  <select id="complexOrdersPage" parameterType="com.baojia.backstage.domain.order.dto.OrdersDto" resultMap="gatherMap">
+  <select id="complexOrdersPage" resultMap="gatherMap">
     select order_no,order_amount from orders_0
+  </select>
+
+  <!--取哪个表的数据-->
+  <select id="getOrderById" parameterType="java.util.Map" resultType="com.baojia.backstage.ordersdk.models.OrdersEntity">
+    select * from orders_#{num} where order_id=#{orderId}
   </select>
 </mapper>

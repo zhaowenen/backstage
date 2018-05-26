@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baojia.backstage.orderservice.modules.order.dao.PaymentRecordMapper">
+
+    <!--取哪个表的数据-->
+    <select id="getPaymentRecordByOid" parameterType="java.util.Map" resultType="com.baojia.backstage.ordersdk.models.PaymentRecordEntity">
+        select * from payment_record_#{num} where order_no=#{orderNo}
+    </select>
+</mapper>

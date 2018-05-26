@@ -5,12 +5,15 @@ import com.baojia.backstage.api.controller.sys.AbstractController;
 import com.baojia.backstage.common.auth.util.PageUtils;
 import com.baojia.backstage.common.auth.util.R;
 import com.baojia.backstage.domain.order.dto.OrdersDto;
-import com.baojia.backstage.ordersdk.services.IOrdersSearchService;
-import com.baojia.backstage.ordersdk.services.IOrdersService;
+import com.baojia.backstage.ordersdk.models.OrdersEntity;
+import com.baojia.backstage.ordersdk.models.OrdersUserEntity;
+import com.baojia.backstage.ordersdk.services.*;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  * @author wxr
@@ -25,6 +28,14 @@ public class OrdersController extends AbstractController {
     private IOrdersService ordersService;
     @Reference
     private IOrdersSearchService ordersSearchService;
+    @Reference
+    private IOrdersBikeService ordersBikeService;
+    @Reference
+    private IOrdersUserService ordersUserService;
+    @Reference
+    private IOrdersOperateService ordersOperateService;
+    @Reference
+    private IPaymentRecordService paymentRecordService;
     /**
      * 订单查询列表
      * @param ordersDto
@@ -99,7 +110,15 @@ public class OrdersController extends AbstractController {
 
     @RequestMapping(value = "/getUserlastOrderInfo", produces = {"application/json;charset=UTF-8"},method = RequestMethod.POST)
     public R getUserlastOrderInfo(){
-        int orderId = ordersSearchService.getUserlastOrderInfo(1);
+        Long orderId = ordersSearchService.getUserlastOrderInfo(1);
         return R.ok().put("orderId",orderId);
+    }
+
+    @RequestMapping(value = "/getOrder", produces = {"application/json;charset=UTF-8"},method = RequestMethod.POST)
+    public R getOrder(){
+        Long orderId = 1l;
+        OrdersEntity ordersEntity = ordersService.getOrderById(1l);
+        Map<String,Object> resultMap = ordersService.getOrderDetailById(orderId);
+        return R.ok().put("ordersEntity",ordersEntity);
     }
 }

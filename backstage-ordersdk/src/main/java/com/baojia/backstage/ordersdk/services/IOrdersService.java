@@ -3,6 +3,7 @@ package com.baojia.backstage.ordersdk.services;
 import com.baojia.backstage.common.auth.util.PageUtils;
 import com.baojia.backstage.ordersdk.models.OrdersEntity;
 import com.baomidou.mybatisplus.service.IService;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import java.util.Map;
  * @Description: dubbo
  * @date 2018/5/22 14:22
  */
+@Component
 public interface IOrdersService extends IService<OrdersEntity>{
     /**
      * 根据条件查询订单信息列表-组合为复杂对象
@@ -52,4 +54,14 @@ public interface IOrdersService extends IService<OrdersEntity>{
      * @return
      */
     Map<String,Object> getOrderDetailById(Long orderId);
+
+    /**
+　　* @Description: 根据订单编号查询订单基本详情信息
+　　* @param orderId
+　　* @return OrdersEntity
+　　* @throws
+　　* @author wxr
+　　* @date 2018/5/26
+　　*/
+    OrdersEntity getOrderById(Long orderId);
 }

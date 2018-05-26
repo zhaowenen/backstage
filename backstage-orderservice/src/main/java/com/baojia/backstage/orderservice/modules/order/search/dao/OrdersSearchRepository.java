@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
  * @Description: 订单elasticsearch查询接口
  * @date 2018/5/24 17:31
  */
-@Component
 public interface OrdersSearchRepository extends ElasticsearchRepository<OrdersSearch, Long> {
 
 }

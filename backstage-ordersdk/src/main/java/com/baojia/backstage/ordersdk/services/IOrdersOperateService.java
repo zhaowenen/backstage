@@ -1,19 +1,19 @@
 package com.baojia.backstage.ordersdk.services;
 
-import com.baojia.backstage.common.auth.util.PageUtils;
 import com.baojia.backstage.ordersdk.models.OrdersBikeEntity;
-import com.baojia.backstage.ordersdk.models.PaymentRecordEntity;
+import com.baojia.backstage.ordersdk.models.OrdersOperateEntity;
 import com.baomidou.mybatisplus.service.IService;
 
+import java.util.List;
 import java.util.Map;
 
 /**
  * @author wxr
- * @Title: 订单车辆服务
+ * @Title: 订单操作服务
  * @Description: dubbo
- * @date 2018/5/22 14:22
+ * @date 2018/5/22 14:40
  */
-public interface IOrdersBikeService extends IService<OrdersBikeEntity>{
+public interface IOrdersOperateService extends IService<OrdersOperateEntity> {
     /**
  　　* @Description: 根据订单编号查询订单车辆信息
  　　* @param orderNo ,num
@@ -22,6 +22,5 @@ public interface IOrdersBikeService extends IService<OrdersBikeEntity>{
  　　* @author wxr
  　　* @date 2018/5/26
  　　*/
-    OrdersBikeEntity getOrdersBikeByOid(Map<String,Object> map);
-
+    List<OrdersOperateEntity> listOrdersOperateByOid(Map<String,Object> map);
 }

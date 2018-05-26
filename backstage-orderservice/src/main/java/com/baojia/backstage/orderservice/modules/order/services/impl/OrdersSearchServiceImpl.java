@@ -7,7 +7,6 @@ import com.baojia.backstage.ordersdk.services.IOrdersSearchService;
 import com.baojia.backstage.ordersdk.searchs.OrdersSearch;
 import com.baojia.backstage.orderservice.modules.order.search.dao.OrdersSearchRepository;
 import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.MatchPhraseQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.sort.FieldSortBuilder;
@@ -20,7 +19,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
-import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -35,7 +33,7 @@ import java.util.List;
 @Component
 @Service(interfaceClass = IOrdersSearchService.class)
 public class OrdersSearchServiceImpl implements IOrdersSearchService{
-    @Qualifier(value = "ordersSearchRepository")
+    /*@Qualifier(value = "ordersSearchRepository")*/
     @Autowired
     private OrdersSearchRepository ordersSearchRepository;
     /**
@@ -105,19 +103,15 @@ public class OrdersSearchServiceImpl implements IOrdersSearchService{
      * 插入订单信息到es中
      */
     public void saveOrdersSearch(){
-        for(int i=0;i<5;i++){
-            OrdersSearch ordersSearch = new OrdersSearch();
-            ordersSearch.setId(Long.valueOf(i+1));
-            ordersSearch.setOrderId(i+1);
-            ordersSearch.setOrderType(2);
-            ordersSearch.setOrderNo(Math.random()+"");
-            ordersSearch.setUserId(i%1==0?1:2);
-            ordersSearch.setUserName("wxr"+i);
-            ordersSearch.setUserMobile("123456"+i);
-            ordersSearch.setCreateTime(new Date());
-            ordersSearchRepository.save(ordersSearch);
-        }
-
+        OrdersSearch ordersSearch = new OrdersSearch();
+        ordersSearch.setOrderId(Long.valueOf(6));
+        ordersSearch.setOrderType(2);
+        ordersSearch.setOrderNo(Math.random()+"");
+        ordersSearch.setUserId(1);
+        ordersSearch.setUserName("wxr"+6);
+        ordersSearch.setUserMobile("123456"+6);
+        ordersSearch.setCreateTime(new Date());
+        ordersSearchRepository.save(ordersSearch);
 
 
     }
@@ -129,7 +123,7 @@ public class OrdersSearchServiceImpl implements IOrdersSearchService{
  　　* @author wxr
  　　* @date 2018-05-24
  　　*/
-    public Integer getUserlastOrderInfo(int userId){
+    public Long getUserlastOrderInfo(int userId){
         Pageable pageable = new PageRequest(0,1);
         QueryBuilder queryBuilder = QueryBuilders.boolQuery().must(QueryBuilders.termQuery("userId",userId));
         //根据es主键id进行排序
@@ -156,5 +150,38 @@ public class OrdersSearchServiceImpl implements IOrdersSearchService{
 
     public void delete(){
         ordersSearchRepository.deleteAll();
+    }
+
+    /**
+ 　　* @Description: 根据订单id查询订单详情
+ 　　* @param userId 用户id
+ 　　* @return Integer
+ 　　* @throws
+ 　　* @author wxr
+ 　　* @date 2018-05-24
+ 　　*/
+    public OrdersSearch getOrderDetail(Long orderId){
+        
+        Pageable pageable = new PageRequest(0,1);
+        QueryBuilder queryBuilder = QueryBuilders.boolQuery().must(QueryBuilders.termQuery("orderId",orderId));
+        //根据es主键id进行排序
+        FieldSortBuilder sort = SortBuilders.fieldSort("createTime").order(SortOrder.DESC);
+
+        //构建查询
+        NativeSearchQueryBuilder nativeSearchQueryBuilder = new NativeSearchQueryBuilder();
+        //将排序设置到构建中
+        nativeSearchQueryBuilder.withSort(sort);
+        //将搜索条件设置到构建中
+        nativeSearchQueryBuilder.withQuery(queryBuilder);
+        //将分页设置到构建中
+        nativeSearchQueryBuilder.withPageable(pageable);
+        //生产NativeSearchQuery
+        NativeSearchQuery query = nativeSearchQueryBuilder.build();
+        Page<OrdersSearch> ordersSearches = ordersSearchRepository.search(query);
+        if(ordersSearches!=null&&ordersSearches.getContent().size()>0){
+            OrdersSearch ordersSearch = ordersSearches.getContent().get(0);
+            return ordersSearch;
+        }
+        return null;
     }
 }

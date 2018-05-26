@@ -44,6 +44,13 @@ spring:
         cluster-nodes: 10.1.11.147:9300 #节点地址，多个节点用逗号隔开
         repositories:
           enabled: true
+    #kafka配置
+    kafka:
+      consumer:
+        bootstrap-servers: 10.1.11.147:9092
+        enable-auto-commit: true
+        auto-offset-reset: earliest
+
 
 
 
@@ -98,6 +105,9 @@ lock:
   bike:
     command:
       url: http://47.95.48.208:83/simulate/service
+
+
+
 
 
 

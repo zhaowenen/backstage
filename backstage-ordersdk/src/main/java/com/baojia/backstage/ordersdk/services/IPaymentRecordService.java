@@ -1,18 +1,17 @@
 package com.baojia.backstage.ordersdk.services;
 
-import com.baojia.backstage.ordersdk.models.OrdersEntity;
-import com.baojia.backstage.ordersdk.models.OrdersUserEntity;
+import com.baojia.backstage.ordersdk.models.PaymentRecordEntity;
 import com.baomidou.mybatisplus.service.IService;
 
 import java.util.Map;
 
 /**
  * @author wxr
- * @Title: 订单用户服务
- * @Description: dubbo
- * @date 2018/5/22 14:22
+ * @Title: IPaymentRecordService
+ * @Description: 支付流水
+ * @date 2018/5/26 11:05
  */
-public interface IOrdersUserService extends IService<OrdersUserEntity>{
+public interface IPaymentRecordService  extends IService<PaymentRecordEntity> {
     /**
  　　* @Description: 根据订单编号查询订单用户信息
  　　* @param orderNo ,num
@@ -21,5 +20,5 @@ public interface IOrdersUserService extends IService<OrdersUserEntity>{
  　　* @author wxr
  　　* @date 2018/5/26
  　　*/
-    OrdersUserEntity getOrdersUserByOid(Map<String,Object> map);
+    PaymentRecordEntity getPaymentRecordByOid(Map<String,Object> map);
 }
