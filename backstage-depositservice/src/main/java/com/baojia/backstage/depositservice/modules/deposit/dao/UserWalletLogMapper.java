@@ -5,4 +5,5 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
 
 public interface UserWalletLogMapper extends BaseMapper<UserWalletLog>{
 	
+	UserWalletLog selectNewColumn();
 }

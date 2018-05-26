@@ -10,4 +10,6 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
 public interface DepositApplyMapper extends BaseMapper<DepositApply>{
 	
 	List<DepositApplyBo> selectWithDrawHistory(DepositApplyDto depositApplyDto);
+	
+	int insertSelective(DepositApply depositApply);
 }

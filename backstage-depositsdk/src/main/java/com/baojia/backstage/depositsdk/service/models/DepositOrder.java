@@ -94,6 +94,12 @@ public class DepositOrder {
      * 修改时间
      */
     private Date modifyTime;
+    
+    /**
+     * 押金来源(1:小蜜,2:蜜蜂)
+     */
+    private Integer depositFrom;
+    
 
     public Long getDepositOrderId() {
         return depositOrderId;
@@ -230,4 +236,13 @@ public class DepositOrder {
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
     }
+
+	public Integer getDepositFrom() {
+		return depositFrom;
+	}
+
+	public void setDepositFrom(Integer depositFrom) {
+		this.depositFrom = depositFrom;
+	}
+    
 }

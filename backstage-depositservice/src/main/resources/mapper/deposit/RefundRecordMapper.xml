@@ -44,7 +44,7 @@
             #{modifyTime,jdbcType=TIMESTAMP}, #{userId,jdbcType=BIGINT})
     </insert>
 
-    <insert id="insertSelective" parameterType="com.baojia.backstage.depositsdk.service.models.RefundRecord" useGeneratedKeys="true" >
+    <insert id="insertSelective" parameterType="com.baojia.backstage.depositsdk.service.models.RefundRecord" useGeneratedKeys="true" keyProperty="refundId" >
         insert into refund_record
         <trim prefix="(" suffix=")" suffixOverrides="," >
             <if test="refundId != null" >

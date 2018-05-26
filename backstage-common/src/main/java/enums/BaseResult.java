@@ -10,5 +10,6 @@ public class BaseResult extends Result {
     
 	public final static Result NOT_FOUNT = new Result(12001, "对象未找到");
 	public final static Result NOT_AUTHOR = new Result(12002, "您没有该操作权限");
+	public final static Result INSERT_ERROR = new Result(12003, "数据插入错误");
 
 }

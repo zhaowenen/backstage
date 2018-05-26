@@ -5,4 +5,5 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
 
 public interface RefundRecordMapper extends BaseMapper<RefundRecord>{
 	
+	int insertSelective(RefundRecord refundRecord);
 }

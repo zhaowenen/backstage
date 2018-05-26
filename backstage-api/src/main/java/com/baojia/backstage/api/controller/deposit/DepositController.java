@@ -3,10 +3,9 @@ package com.baojia.backstage.api.controller.deposit;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -16,22 +15,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.baojia.backstage.api.controller.sys.AbstractController;
+import com.baojia.backstage.common.auth.util.DateUtils;
 import com.baojia.backstage.common.auth.util.PageUtils;
 import com.baojia.backstage.common.auth.util.Result;
 import com.baojia.backstage.common.exception.MeBikeException;
-import com.baojia.backstage.depositsdk.service.models.DepositOrder;
-import com.baojia.backstage.depositsdk.service.models.RefundRecord;
+import com.baojia.backstage.depositsdk.service.service.BusinessService;
 import com.baojia.backstage.depositsdk.service.service.DepositApplyService;
 import com.baojia.backstage.depositsdk.service.service.DepositOrderService;
 import com.baojia.backstage.depositsdk.service.service.RefundRecordService;
 import com.baojia.backstage.domain.deposit.bo.DepositOrderInfoBo;
 import com.baojia.backstage.domain.deposit.dto.DepositApplyDto;
 import com.baojia.backstage.domain.deposit.dto.DepositOrderDto;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.mapper.Wrapper;
 
+import enums.BaseResult;
+import enums.deposit.DepositApplyType;
 import enums.deposit.DepositPayMethodStatus;
 import enums.deposit.DepositStatus;
+import enums.deposit.UserModeType;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -53,6 +53,8 @@ public class DepositController extends AbstractController {
 	private DepositOrderService depositOrderService;
 	@Reference 
 	private RefundRecordService refundRecordService;
+	@Reference
+	private BusinessService businessService;
 
 	
 	@GetMapping(value = "/orderlist", produces = { "application/json;charset=UTF-8" })
@@ -96,7 +98,7 @@ public class DepositController extends AbstractController {
 			if(withDrawInfo != null) {
 				orderInfo.setOpsUser(withDrawInfo.getOpsUser());
 				orderInfo.setDeductAmount(withDrawInfo.getDeductAmount());
-				orderInfo.setDeductMoneyTime(orderInfo.getRefundTime());	//扣款与提现同时发生，所以扣款时间就是提现时间。因为数据库只有扣款申请，而押金订单表中会更新提现时间
+				orderInfo.setDeductMoneyTime(orderInfo.getRefundTime());	//扣款与提现同时发生，所以这个扣款时间就是提现时间。因为数据库只有扣款申请，没有记录扣款时间，而押金订单表中会更新提现时间
 				orderInfo.setDeductMoneyMemo(withDrawInfo.getDeductMoneyMemo());
 			}
 			
@@ -137,8 +139,47 @@ public class DepositController extends AbstractController {
 			if (depositOrderId == null) {
 				throw new MeBikeException(Result.ERROR_PARAM);
 			}
-			Map<String, Object> map = depositOrderService.selectMap(new EntityWrapper<DepositOrder>().eq("deposit_order_id", depositOrderId));
-//			refundRecordService.withdrawDeposit();
+//			Map<String, Object> map = depositOrderService.selectMap(new EntityWrapper<DepositOrder>().eq("deposit_order_id", depositOrderId));
+			Map<String, Object> map = depositOrderService.getDepositOrderById(depositOrderId);
+			if(map == null) {
+				throw new MeBikeException(BaseResult.NOT_FOUNT);
+			}
+			map.forEach((key, value) -> logger.info("DepositOrderById: " + key + "--->" + value));
+			
+			Long userId = MapUtils.getLong(map, "userId");
+			String userName = MapUtils.getString(map, "userName");
+			String userPhone = MapUtils.getString(map, "mobile");
+			BigDecimal applyAmount = new BigDecimal(MapUtils.getDoubleValue(map, "amount"));
+			Long applyUserId = 12L;	//当前登陆人Id
+			String applyUserName = "admin";	//当前登陆人
+			Integer payMethod = MapUtils.getInteger(map, "payMethod");	//用户收款方式，因为后台提现操作在押金订单表中的退款方式都是后台原路提现，所以要根据押金订单表中的支付方式来设置这个用户收款方式
+			Integer depositFrom = MapUtils.getInteger(map, "depositFrom");	
+			String payTimeStemp = MapUtils.getString(map, "payTime");
+			Date payTime = DateUtils.parse(payTimeStemp);
+			Integer userMode = null;
+			if(payMethod == DepositPayMethodStatus.WECHAT.getType()) {
+				userMode = UserModeType.WECHAT.getType();
+			}
+			if(payMethod == DepositPayMethodStatus.ALIPAY.getType()) {
+				userMode = UserModeType.ALIPAY.getType();
+			}
+			String userAccount = null;	//暂定，支付押金时是微信或支付宝支付，没有账号；银行支付，不知道从哪获取
+			//1.添加提现申请表和退款流水表
+			Map<String, Object> idMap = businessService.addWithDrawInfo(DepositApplyType.WITHDRAW.getType(), userId, userName, userPhone, applyAmount, new BigDecimal(0), applyUserId, applyUserName, userMode, userName, userAccount, depositOrderId);
+			Long withDrawApplyId = MapUtils.getLong(idMap, "withDrawApplyId");
+			Long refundRecordId = MapUtils.getLong(idMap, "refundRecordId");
+			String orderNo = MapUtils.getString(idMap, "orderNo");	//退款流水表的订单号
+			if(withDrawApplyId == null || refundRecordId == null) {
+				throw new MeBikeException(BaseResult.INSERT_ERROR);
+			}
+			idMap.forEach((key, value) -> logger.info("idMap: " + key + "--->" + value));
+			
+			//3.调接口提现
+			String status = "success";	//接口返回状态
+			String outTradeNo = null;	//接口返回的商户号
+			//4.更新押金相关表状态
+			businessService.updateDepositStauts(withDrawApplyId, refundRecordId, depositOrderId, status, applyUserName, applyAmount, new BigDecimal(0), payTime, applyUserId, depositFrom, orderNo, outTradeNo);
+			
 			Result res = Result.SUCCESS.copyThis();
 			res.setContext(map);
 			return res;

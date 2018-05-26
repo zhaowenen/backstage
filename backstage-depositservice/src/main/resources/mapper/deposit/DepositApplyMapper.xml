@@ -8,22 +8,23 @@
 		<result column="user_id" property="userId" jdbcType="BIGINT" />
 		<result column="user_name" property="userName" jdbcType="VARCHAR" />
 		<result column="user_phone" property="userPhone" jdbcType="VARCHAR" />
-		<result column="apply_type" property="applyType" jdbcType="SMALLINT" />
+		<result column="apply_type" property="applyType" jdbcType="INTEGER" />
 		<result column="apply_amount" property="applyAmount" jdbcType="DECIMAL" />
 		<result column="apply_user_id" property="applyUserId" jdbcType="BIGINT" />
 		<result column="apply_user_name" property="applyUserName" jdbcType="VARCHAR" />
 		<result column="capital_reason_id" property="capitalReasonId" jdbcType="BIGINT" />
 		<result column="capital_reason_name" property="capitalReasonName" jdbcType="VARCHAR" />
 		<result column="apply_node" property="applyNode" jdbcType="VARCHAR" />
-		<result column="user_mode" property="userMode" jdbcType="SMALLINT" />
+		<result column="user_mode" property="userMode" jdbcType="INTEGER" />
 		<result column="user_real_name" property="userRealName" jdbcType="VARCHAR" />
 		<result column="user_account" property="userAccount" jdbcType="VARCHAR" />
-		<result column="auditing_state" property="auditingState" jdbcType="SMALLINT" />
+		<result column="auditing_state" property="auditingState" jdbcType="INTEGER" />
 		<result column="auditing_user_name" property="auditingUserName" jdbcType="VARCHAR" />
 		<result column="auditing_user_id" property="auditingUserId" jdbcType="BIGINT" />
 		<result column="auditing_note" property="auditingNote" jdbcType="VARCHAR" />
 		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
 		<result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+		<result column="deposit_order_id" property="depositOrderId" jdbcType="BIGINT" />
 	</resultMap>
 
 	<resultMap id="WithDrawMap" type="com.baojia.backstage.domain.deposit.bo.DepositApplyBo">
@@ -42,7 +43,7 @@
 		capital_reason_id, capital_reason_name, apply_node, user_mode, user_real_name,
 		user_account,
 		auditing_state, auditing_user_name, auditing_user_id, auditing_note, create_time,
-		modify_time
+		modify_time, deposit_order_id
 	</sql>
 
 
@@ -94,22 +95,22 @@
 		capital_reason_name, apply_node, user_mode,
 		user_real_name, user_account, auditing_state,
 		auditing_user_name, auditing_user_id, auditing_note,
-		create_time, modify_time)
+		create_time, modify_time, deposit_order_id)
 		values (#{did,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT},
 		#{userName,jdbcType=VARCHAR},
-		#{userPhone,jdbcType=VARCHAR}, #{applyType,jdbcType=SMALLINT}, #{applyAmount,jdbcType=DECIMAL},
+		#{userPhone,jdbcType=VARCHAR}, #{applyType,jdbcType=INTEGER}, #{applyAmount,jdbcType=DECIMAL},
 		#{applyUserId,jdbcType=BIGINT}, #{applyUserName,jdbcType=VARCHAR},
 		#{capitalReasonId,jdbcType=BIGINT},
 		#{capitalReasonName,jdbcType=VARCHAR}, #{applyNode,jdbcType=VARCHAR},
-		#{userMode,jdbcType=SMALLINT},
-		#{userRealName,jdbcType=VARCHAR}, #{userAccount,jdbcType=VARCHAR}, #{auditingState,jdbcType=SMALLINT},
+		#{userMode,jdbcType=INTEGER},
+		#{userRealName,jdbcType=VARCHAR}, #{userAccount,jdbcType=VARCHAR}, #{auditingState,jdbcType=INTEGER},
 		#{auditingUserName,jdbcType=VARCHAR},
 		#{auditingUserId,jdbcType=BIGINT}, #{auditingNote,jdbcType=VARCHAR},
-		#{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP})
+		#{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}, #{depositOrderId,jdbcType=BIGINT})
 	</insert>
 
 	<insert id="insertSelective"
-		parameterType="com.baojia.backstage.depositsdk.service.models.DepositApply" useGeneratedKeys="true" >
+		parameterType="com.baojia.backstage.depositsdk.service.models.DepositApply" useGeneratedKeys="true" keyProperty="did" >
 		insert into deposit_apply
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="did != null">
@@ -172,6 +173,9 @@
 			<if test="modifyTime != null">
 				modify_time,
 			</if>
+			<if test="depositOrderId != null">
+				deposit_order_id,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="did != null">
@@ -187,7 +191,7 @@
 				#{userPhone,jdbcType=VARCHAR},
 			</if>
 			<if test="applyType != null">
-				#{applyType,jdbcType=SMALLINT},
+				#{applyType,jdbcType=INTEGER},
 			</if>
 			<if test="applyAmount != null">
 				#{applyAmount,jdbcType=DECIMAL},
@@ -208,7 +212,7 @@
 				#{applyNode,jdbcType=VARCHAR},
 			</if>
 			<if test="userMode != null">
-				#{userMode,jdbcType=SMALLINT},
+				#{userMode,jdbcType=INTEGER},
 			</if>
 			<if test="userRealName != null">
 				#{userRealName,jdbcType=VARCHAR},
@@ -217,7 +221,7 @@
 				#{userAccount,jdbcType=VARCHAR},
 			</if>
 			<if test="auditingState != null">
-				#{auditingState,jdbcType=SMALLINT},
+				#{auditingState,jdbcType=INTEGER},
 			</if>
 			<if test="auditingUserName != null">
 				#{auditingUserName,jdbcType=VARCHAR},
@@ -233,6 +237,9 @@
 			</if>
 			<if test="modifyTime != null">
 				#{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="depositOrderId != null">
+				#{depositOrderId,jdbcType=BIGINT},
 			</if>
 		</trim>
 	</insert>
@@ -251,7 +258,7 @@
 				user_phone = #{userPhone,jdbcType=VARCHAR},
 			</if>
 			<if test="applyType != null">
-				apply_type = #{applyType,jdbcType=SMALLINT},
+				apply_type = #{applyType,jdbcType=INTEGER},
 			</if>
 			<if test="applyAmount != null">
 				apply_amount = #{applyAmount,jdbcType=DECIMAL},
@@ -272,7 +279,7 @@
 				apply_node = #{applyNode,jdbcType=VARCHAR},
 			</if>
 			<if test="userMode != null">
-				user_mode = #{userMode,jdbcType=SMALLINT},
+				user_mode = #{userMode,jdbcType=INTEGER},
 			</if>
 			<if test="userRealName != null">
 				user_real_name = #{userRealName,jdbcType=VARCHAR},
@@ -281,7 +288,7 @@
 				user_account = #{userAccount,jdbcType=VARCHAR},
 			</if>
 			<if test="auditingState != null">
-				auditing_state = #{auditingState,jdbcType=SMALLINT},
+				auditing_state = #{auditingState,jdbcType=INTEGER},
 			</if>
 			<if test="auditingUserName != null">
 				auditing_user_name = #{auditingUserName,jdbcType=VARCHAR},
@@ -298,6 +305,9 @@
 			<if test="modifyTime != null">
 				modify_time = #{modifyTime,jdbcType=TIMESTAMP},
 			</if>
+			<if test="depositOrderId != null">
+				deposit_order_id = #{depositOrderId,jdbcType=BIGINT},
+			</if>
 		</set>
 		where did = #{did,jdbcType=BIGINT}
 	</update>
@@ -308,22 +318,23 @@
 		set user_id = #{userId,jdbcType=BIGINT},
 		user_name = #{userName,jdbcType=VARCHAR},
 		user_phone = #{userPhone,jdbcType=VARCHAR},
-		apply_type = #{applyType,jdbcType=SMALLINT},
+		apply_type = #{applyType,jdbcType=INTEGER},
 		apply_amount = #{applyAmount,jdbcType=DECIMAL},
 		apply_user_id = #{applyUserId,jdbcType=BIGINT},
 		apply_user_name = #{applyUserName,jdbcType=VARCHAR},
 		capital_reason_id = #{capitalReasonId,jdbcType=BIGINT},
 		capital_reason_name = #{capitalReasonName,jdbcType=VARCHAR},
 		apply_node = #{applyNode,jdbcType=VARCHAR},
-		user_mode = #{userMode,jdbcType=SMALLINT},
+		user_mode = #{userMode,jdbcType=INTEGER},
 		user_real_name = #{userRealName,jdbcType=VARCHAR},
 		user_account = #{userAccount,jdbcType=VARCHAR},
-		auditing_state = #{auditingState,jdbcType=SMALLINT},
+		auditing_state = #{auditingState,jdbcType=INTEGER},
 		auditing_user_name = #{auditingUserName,jdbcType=VARCHAR},
 		auditing_user_id = #{auditingUserId,jdbcType=BIGINT},
 		auditing_note = #{auditingNote,jdbcType=VARCHAR},
 		create_time = #{createTime,jdbcType=TIMESTAMP},
-		modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+		modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+		deposit_order_id = #{depositOrderId,jdbcType=BIGINT}
 		where did = #{did,jdbcType=BIGINT}
 	</update>
 </mapper>

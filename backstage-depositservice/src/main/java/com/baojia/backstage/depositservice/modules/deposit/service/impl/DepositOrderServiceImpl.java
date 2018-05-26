@@ -1,6 +1,7 @@
 package com.baojia.backstage.depositservice.modules.deposit.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,5 +48,10 @@ public class DepositOrderServiceImpl  extends ServiceImpl<DepositOrderMapper, De
 	@Override
 	public DepositOrderInfoBo getDepositOrderWithDrawInfo(Long depositOrderId) {
 		return baseMapper.selectDepositOrderWithDrawInfo(depositOrderId);
+	}
+
+	@Override
+	public Map<String, Object> getDepositOrderById(Long depositOrderId) {
+		return baseMapper.selectDepositOrderById(depositOrderId);
 	}
 }
