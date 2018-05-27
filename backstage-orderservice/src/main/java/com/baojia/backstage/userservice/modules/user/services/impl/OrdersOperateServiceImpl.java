@@ -1,15 +1,15 @@
-package com.baojia.backstage.orderservice.modules.order.services.impl;
+package com.baojia.backstage.userservice.modules.user.services.impl;
 
-import com.alibaba.dubbo.config.annotation.Service;
-import com.baojia.backstage.ordersdk.models.OrdersOperateEntity;
-import com.baojia.backstage.ordersdk.services.IOrdersOperateService;
-import com.baojia.backstage.orderservice.modules.order.dao.OrdersOperateMapper;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import org.springframework.stereotype.Component;
-
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.stereotype.Component;
+
+import com.alibaba.dubbo.config.annotation.Service;
+import com.baojia.backstage.ordersdk.services.IOrdersOperateService;
+import com.baojia.backstage.usersdk.models.OrdersOperateEntity;
+import com.baojia.backstage.userservice.modules.user.dao.OrdersOperateMapper;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 
 /**
  * @author wxr

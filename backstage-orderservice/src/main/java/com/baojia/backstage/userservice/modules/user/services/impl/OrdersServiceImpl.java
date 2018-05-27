@@ -1,26 +1,34 @@
-package com.baojia.backstage.orderservice.modules.order.services.impl;
-
-import com.alibaba.dubbo.config.annotation.Service;
-import com.baojia.backstage.common.auth.util.PageUtils;
-import com.baojia.backstage.domain.order.bo.OrdersBo;
-import com.baojia.backstage.domain.order.dto.OrdersDto;
-import com.baojia.backstage.ordersdk.models.*;
-import com.baojia.backstage.ordersdk.searchs.OrdersSearch;
-import com.baojia.backstage.ordersdk.services.*;
-import com.baojia.backstage.orderservice.common.utils.OkHttpUtil;
-import com.baojia.backstage.orderservice.modules.order.dao.OrdersMapper;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+package com.baojia.backstage.userservice.modules.user.services.impl;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import com.alibaba.dubbo.config.annotation.Service;
+import com.baojia.backstage.common.auth.util.PageUtils;
+import com.baojia.backstage.domain.order.bo.OrdersBo;
+import com.baojia.backstage.ordersdk.models.PaymentRecordEntity;
+import com.baojia.backstage.ordersdk.searchs.OrdersSearch;
+import com.baojia.backstage.ordersdk.services.IOrdersOperateService;
+import com.baojia.backstage.ordersdk.services.IPaymentRecordService;
+import com.baojia.backstage.usersdk.models.OrdersBikeEntity;
+import com.baojia.backstage.usersdk.models.OrdersEntity;
+import com.baojia.backstage.usersdk.models.OrdersOperateEntity;
+import com.baojia.backstage.usersdk.models.OrdersUserEntity;
+import com.baojia.backstage.usersdk.services.IOrdersBikeService;
+import com.baojia.backstage.usersdk.services.IOrdersService;
+import com.baojia.backstage.usersdk.services.IOrdersUserService;
+import com.baojia.backstage.userservice.common.utils.OkHttpUtil;
+import com.baojia.backstage.userservice.modules.user.dao.OrdersMapper;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 /**
  * @author wxr

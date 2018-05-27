@@ -1,10 +1,9 @@
-package com.baojia.backstage.orderservice.modules.order.dao;
-
-import com.baojia.backstage.domain.order.dto.OrdersDto;
-import com.baojia.backstage.ordersdk.models.OrdersBikeEntity;
-import com.baomidou.mybatisplus.mapper.BaseMapper;
+package com.baojia.backstage.userservice.modules.user.dao;
 
 import java.util.Map;
+
+import com.baojia.backstage.usersdk.models.OrdersBikeEntity;
+import com.baomidou.mybatisplus.mapper.BaseMapper;
 
 /**
  * @author wxr
