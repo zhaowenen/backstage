@@ -16,5 +16,7 @@ public class DepositAuditingStatus extends EnumType {
 	public static final DepositAuditingStatus WAIT_CHACK = new DepositAuditingStatus(100, "待审核");
 	public static final DepositAuditingStatus PASS = new DepositAuditingStatus(200, "审核通过");
 	public static final DepositAuditingStatus REFUSE = new DepositAuditingStatus(300, "审核拒绝");
+	public static final DepositAuditingStatus PAY_SUCCESS = new DepositAuditingStatus(400, "支付成功");
+	public static final DepositAuditingStatus PAY_FAIL = new DepositAuditingStatus(500, "支付失败");
 
 }

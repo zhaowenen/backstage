@@ -28,7 +28,7 @@ public class UserWalletLog {
     /**
      * 押金金额
      */
-    private Integer depositAmount;
+    private BigDecimal depositAmount;
 
     /**
      * 押金变化金额
@@ -104,6 +104,12 @@ public class UserWalletLog {
      * 是否删除 0-已删除 1-未删除
      */
     private Integer delFlag;
+    
+    /**
+     * 操作人
+     */
+    private String operateUser;
+    
 
     /**
      * 创建时间
@@ -144,11 +150,11 @@ public class UserWalletLog {
         this.rechargeStatus = rechargeStatus;
     }
 
-    public Integer getDepositAmount() {
+    public BigDecimal getDepositAmount() {
         return depositAmount;
     }
 
-    public void setDepositAmount(Integer depositAmount) {
+    public void setDepositAmount(BigDecimal depositAmount) {
         this.depositAmount = depositAmount;
     }
 
@@ -295,4 +301,13 @@ public class UserWalletLog {
     public void setRemarks(String remarks) {
         this.remarks = remarks == null ? null : remarks.trim();
     }
+
+	public String getOperateUser() {
+		return operateUser;
+	}
+
+	public void setOperateUser(String operateUser) {
+		this.operateUser = operateUser;
+	}
+    
 }

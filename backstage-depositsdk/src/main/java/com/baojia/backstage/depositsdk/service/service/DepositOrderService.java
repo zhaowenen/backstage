@@ -1,6 +1,9 @@
 package com.baojia.backstage.depositsdk.service.service;
 
 
+
+import java.util.Map;
+
 import com.baojia.backstage.common.auth.util.PageUtils;
 import com.baojia.backstage.depositsdk.service.models.DepositOrder;
 import com.baojia.backstage.domain.deposit.bo.DepositOrderInfoBo;
@@ -12,6 +15,8 @@ public interface DepositOrderService extends IService<DepositOrder>{
 	PageUtils selectDepositOrderList(DepositOrderDto depositOrderDto);
 	
 	DepositOrderInfoBo getDepositOrderInfo(Long depositOrderId);
+	
+	Map<String, Object> getDepositOrderById(Long depositOrderId);
 	
 	DepositOrderInfoBo getDepositOrderWithDrawInfo(Long depositOrderId);
 	

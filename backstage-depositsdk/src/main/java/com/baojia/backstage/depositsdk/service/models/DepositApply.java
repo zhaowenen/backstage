@@ -36,7 +36,7 @@ public class DepositApply {
     /**
      * 申请类型 200提现, 300扣款
      */
-    private Short applyType;
+    private Integer applyType;
 
     /**
      * 申请金额  正数
@@ -71,7 +71,7 @@ public class DepositApply {
     /**
      * 用户收款方式 100微信、200支付宝、300银行
      */
-    private Short userMode;
+    private Integer userMode;
 
     /**
      * 收款人真实姓名
@@ -86,7 +86,7 @@ public class DepositApply {
     /**
      * 审批状态 100待审核,200审核通过, 300审核拒绝,400支付成功,500支付失败
      */
-    private Short auditingState;
+    private Integer auditingState;
 
     /**
      * 审批人姓名
@@ -112,6 +112,11 @@ public class DepositApply {
      * 修改时间
      */
     private Date modifyTime;
+    
+    /**
+     * 押金订单ID
+     */
+    private Long depositOrderId;
 
     public Long getDid() {
         return did;
@@ -145,11 +150,11 @@ public class DepositApply {
         this.userPhone = userPhone == null ? null : userPhone.trim();
     }
 
-    public Short getApplyType() {
+    public Integer getApplyType() {
         return applyType;
     }
 
-    public void setApplyType(Short applyType) {
+    public void setApplyType(Integer applyType) {
         this.applyType = applyType;
     }
 
@@ -201,11 +206,11 @@ public class DepositApply {
         this.applyNode = applyNode == null ? null : applyNode.trim();
     }
 
-    public Short getUserMode() {
+    public Integer getUserMode() {
         return userMode;
     }
 
-    public void setUserMode(Short userMode) {
+    public void setUserMode(Integer userMode) {
         this.userMode = userMode;
     }
 
@@ -225,11 +230,11 @@ public class DepositApply {
         this.userAccount = userAccount == null ? null : userAccount.trim();
     }
 
-    public Short getAuditingState() {
+    public Integer getAuditingState() {
         return auditingState;
     }
 
-    public void setAuditingState(Short auditingState) {
+    public void setAuditingState(Integer auditingState) {
         this.auditingState = auditingState;
     }
 
@@ -272,4 +277,13 @@ public class DepositApply {
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
     }
+
+	public Long getDepositOrderId() {
+		return depositOrderId;
+	}
+
+	public void setDepositOrderId(Long depositOrderId) {
+		this.depositOrderId = depositOrderId;
+	}
+    
 }

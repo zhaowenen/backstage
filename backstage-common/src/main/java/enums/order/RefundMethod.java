@@ -1,4 +1,4 @@
-package order;
+package enums.order;
 
 import enums.EnumType;
 /**

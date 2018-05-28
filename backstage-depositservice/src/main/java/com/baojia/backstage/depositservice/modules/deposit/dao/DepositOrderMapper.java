@@ -1,6 +1,7 @@
 package com.baojia.backstage.depositservice.modules.deposit.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.baojia.backstage.depositsdk.service.models.DepositOrder;
 import com.baojia.backstage.domain.deposit.bo.DepositOrderBo;
@@ -10,9 +11,13 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
 
 public interface DepositOrderMapper extends BaseMapper<DepositOrder>{
 	
-	public List<DepositOrderBo> selectDepositOrderList(DepositOrderDto depositOrderDto);
+	List<DepositOrderBo> selectDepositOrderList(DepositOrderDto depositOrderDto);
 	
-	public DepositOrderInfoBo selectDepositOrderInfo(Long depositOrderId);
+	DepositOrderInfoBo selectDepositOrderInfo(Long depositOrderId);
 	
-	public DepositOrderInfoBo selectDepositOrderWithDrawInfo(Long depositOrderId);
+	Map<String, Object> selectDepositOrderById(Long depositOrderId);
+	
+	DepositOrderInfoBo selectDepositOrderWithDrawInfo(Long depositOrderId);
+	
+	void updateByPrimaryKeySelective(DepositOrder depositOrder);
 }
