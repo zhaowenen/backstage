@@ -64,6 +64,7 @@
     
     <select id="selectDepositOrderById" resultType="java.util.Map" parameterType="java.lang.Long" >
     	select 
+    	u.user_id userId,
     	o.deposit_order_id depositOrderId, 
     	o.status status, 
     	u.real_name userName, 

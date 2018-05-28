@@ -144,12 +144,12 @@ public class DepositController extends AbstractController {
 			if(map == null) {
 				throw new MeBikeException(BaseResult.NOT_FOUNT);
 			}
-			map.forEach((key, value) -> logger.info("DepositOrderById: " + key + "--->" + value));
+			map.forEach((key, value) -> logger.info("提现前的押金订单信息: " + key + "--->" + value));
 			
 			Long userId = MapUtils.getLong(map, "userId");
 			String userName = MapUtils.getString(map, "userName");
 			String userPhone = MapUtils.getString(map, "mobile");
-			BigDecimal applyAmount = new BigDecimal(MapUtils.getDoubleValue(map, "amount"));
+			BigDecimal amount = new BigDecimal(MapUtils.getDoubleValue(map, "amount"));
 			Long applyUserId = 12L;	//当前登陆人Id
 			String applyUserName = "admin";	//当前登陆人
 			Integer payMethod = MapUtils.getInteger(map, "payMethod");	//用户收款方式，因为后台提现操作在押金订单表中的退款方式都是后台原路提现，所以要根据押金订单表中的支付方式来设置这个用户收款方式
@@ -164,21 +164,26 @@ public class DepositController extends AbstractController {
 				userMode = UserModeType.ALIPAY.getType();
 			}
 			String userAccount = null;	//暂定，支付押金时是微信或支付宝支付，没有账号；银行支付，不知道从哪获取
-			//1.添加提现申请表和退款流水表
-			Map<String, Object> idMap = businessService.addWithDrawInfo(DepositApplyType.WITHDRAW.getType(), userId, userName, userPhone, applyAmount, new BigDecimal(0), applyUserId, applyUserName, userMode, userName, userAccount, depositOrderId);
-			Long withDrawApplyId = MapUtils.getLong(idMap, "withDrawApplyId");
-			Long refundRecordId = MapUtils.getLong(idMap, "refundRecordId");
-			String orderNo = MapUtils.getString(idMap, "orderNo");	//退款流水表的订单号
+			//1.添加提现/扣款申请表
+			Map<String, Object> applyMap = businessService.addDepositApply(DepositApplyType.WITHDRAW.getType(), userId, userName, userPhone, amount, new BigDecimal(0), applyUserId, applyUserName, userMode, userName, userAccount, depositOrderId);
+			//2.添加退款流水表
+			Map<String, Object> resMap = businessService.addRefundRecord(applyMap, userId, amount, userMode);
+			
+			Long withDrawApplyId = MapUtils.getLong(resMap, "withDrawApplyId");
+			Long refundRecordId = MapUtils.getLong(resMap, "refundRecordId");
+			String orderNo = MapUtils.getString(resMap, "orderNo");	//退款流水表的订单号
 			if(withDrawApplyId == null || refundRecordId == null) {
 				throw new MeBikeException(BaseResult.INSERT_ERROR);
 			}
-			idMap.forEach((key, value) -> logger.info("idMap: " + key + "--->" + value));
+			resMap.forEach((key, value) -> logger.info("添加完申请表和退款流水表的id: " + key + "--->" + value));
 			
 			//3.调接口提现
 			String status = "success";	//接口返回状态
 			String outTradeNo = null;	//接口返回的商户号
 			//4.更新押金相关表状态
-			businessService.updateDepositStauts(withDrawApplyId, refundRecordId, depositOrderId, status, applyUserName, applyAmount, new BigDecimal(0), payTime, applyUserId, depositFrom, orderNo, outTradeNo);
+			businessService.updateDepositStauts(withDrawApplyId, refundRecordId, depositOrderId, status, applyUserName, amount, new BigDecimal(0), payTime, applyUserId, depositFrom, orderNo);
+			//5.更新退款流水表退款状态为“退款成功”
+			businessService.updateRefundRecord(refundRecordId, outTradeNo);
 			
 			Result res = Result.SUCCESS.copyThis();
 			res.setContext(map);

@@ -11,11 +11,13 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
 
 public interface DepositOrderMapper extends BaseMapper<DepositOrder>{
 	
-	public List<DepositOrderBo> selectDepositOrderList(DepositOrderDto depositOrderDto);
+	List<DepositOrderBo> selectDepositOrderList(DepositOrderDto depositOrderDto);
 	
-	public DepositOrderInfoBo selectDepositOrderInfo(Long depositOrderId);
+	DepositOrderInfoBo selectDepositOrderInfo(Long depositOrderId);
 	
 	Map<String, Object> selectDepositOrderById(Long depositOrderId);
 	
-	public DepositOrderInfoBo selectDepositOrderWithDrawInfo(Long depositOrderId);
+	DepositOrderInfoBo selectDepositOrderWithDrawInfo(Long depositOrderId);
+	
+	void updateByPrimaryKeySelective(DepositOrder depositOrder);
 }

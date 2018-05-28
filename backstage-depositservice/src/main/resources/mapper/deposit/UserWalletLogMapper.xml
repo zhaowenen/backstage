@@ -70,7 +70,7 @@
             #{rechargeAmount,jdbcType=DECIMAL}, #{rechargeAmountChange,jdbcType=DECIMAL}, 
             #{giveAmount,jdbcType=DECIMAL}, #{giveAmountChange,jdbcType=DECIMAL}, #{orderNo,jdbcType=VARCHAR}, 
             #{type,jdbcType=INTEGER}, #{delFlag,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-            #{modifyTime,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{operate_user,jdbcType=VARCHAR})
+            #{modifyTime,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{operateUser,jdbcType=VARCHAR})
     </insert>
 
     <insert id="insertSelective" parameterType="com.baojia.backstage.depositsdk.service.models.UserWalletLog" useGeneratedKeys="true" keyProperty="id" >

@@ -62,29 +62,23 @@ public class BusinessServiceImpl  implements BusinessService{
 	
 	@Transactional
 	@Override
-	public Map<String, Object> addWithDrawInfo(Integer type, Long userId, String userName, String userPhone, BigDecimal beforeAmount, BigDecimal changeAmount,
+	public Map<String, Object> addDepositApply(Integer type, Long userId, String userName, String userPhone, BigDecimal beforeAmount, BigDecimal changeAmount,
 			Long applyUserId, String applyUserName, Integer userMode, String userRealName, String userAccount, Long depositOrderId) {
 		Map<String, Object> res = new HashMap<>();
 		
 		Long withDrawApplyId = null;
 		Long DeductApplyId = null;
-		Long refundRecordId = null;
-		String orderNo = null;
 		if(type == DepositApplyType.WITHDRAW.getType()) {	//提现
-			logger.info("生产提现相关表记录！");
 			//1.添加提现申请表
 			withDrawApplyId = addDepositApply(DepositApplyType.WITHDRAW.getType(), userId, userName, userPhone, beforeAmount, applyUserId, applyUserName, userMode, userName, userAccount, depositOrderId, DepositCapitalReason.CONSOLE_WITHDRAW, DepositCapitalReason.CONSOLE_WITHDRAW);
-			//2.添加退款流水表
-			 Map<String, Object> map = addRefundRecord(userId, beforeAmount, userMode);
-			 refundRecordId = MapUtils.getLong(map, "refundRecordId");
-			 orderNo = MapUtils.getString(map, "orderNo");
-		}else {	//扣款（扣款和提现同时进行，所以需要增加提现申请和扣款申请两条记录）
+			
+		}else {	
+			//扣款（扣款和提现同时进行，所以需要增加提现申请和扣款申请两条记录）
 			//注意计算扣款和提现金额
 		}
+		
 		res.put("withDrawApplyId", withDrawApplyId);
-		res.put("refundRecordId", refundRecordId);
 		res.put("DeductApplyId", DeductApplyId);
-		res.put("orderNo", orderNo);
 		return res;
 	}
 	
@@ -93,26 +87,16 @@ public class BusinessServiceImpl  implements BusinessService{
 	@Override
 	public void updateDepositStauts(Long depositApplyId, Long refundRecordId, Long depositOrderId, String status,
 			String applyUserName, BigDecimal beforeAmount, BigDecimal changeAmount, Date payTime, Long userId, Integer depositFrom,
-			String orderNo, String outTradeNo) {
+			String orderNo) {
 		if("success".equals(status)) {
 			//1.更新提现申请表审批状态为“支付成功”
 			DepositApply depositApply = new DepositApply();
 			depositApply.setDid(depositApplyId);
 			depositApply.setAuditingState(DepositAuditingStatus.PAY_SUCCESS.getType());
 			depositApply.setModifyTime(new Date());
-			depositApplyMapper.updateById(depositApply);
+			depositApplyMapper.updateByPrimaryKeySelective(depositApply);
 			
-			//2.更新退款流水表退款状态为“退款成功”
-			DynamicDataSource.setDataSource(DataSourceNames.SECOND);
-			RefundRecord record = new RefundRecord();
-			record.setRefundId(refundRecordId);
-			record.setRefundStatus(RefundStatus.REFUND_SUCCESS.getType());
-			record.setOutTradeNo(outTradeNo);
-			record.setModifyTime(new Date());
-			refundRecordMapper.updateById(record);
-			DynamicDataSource.clearDataSource();
-			
-			//3.更新押金订单表提现相关
+			//2.更新押金订单表提现相关
 			DepositOrder depositOrder = new DepositOrder();
 			depositOrder.setDepositOrderId(depositOrderId);
 			depositOrder.setStatus(DepositStatus.WITHDRAW.getType());
@@ -120,11 +104,11 @@ public class BusinessServiceImpl  implements BusinessService{
 			depositOrder.setRefundAmount(beforeAmount.subtract(changeAmount));
 			depositOrder.setRefundTime(new Date());
 			depositOrder.setModifyTime(new Date());
-			depositOrderMapper.updateById(depositOrder);
+			depositOrderMapper.updateByPrimaryKeySelective(depositOrder);
 			
-			//4.查最新一条钱包操作记录用与封装下面添加记录中的其他信息
+			//3.查最新一条钱包操作记录用与封装下面添加记录中的其他信息
 			UserWalletLog lastLog = userWalletLogMapper.selectNewColumn();
-			//5.添加钱包操作记录表
+			//4.添加钱包操作记录表
 			UserWalletLog userWalletLog = new UserWalletLog();
 			userWalletLog.setUserId(userId);
 			userWalletLog.setRechargeStatus(RechargeStatus.PAID.getType());
@@ -155,7 +139,7 @@ public class BusinessServiceImpl  implements BusinessService{
 			depositApply.setDid(depositApplyId);
 			depositApply.setAuditingState(DepositAuditingStatus.PAY_FAIL.getType());
 			depositApply.setModifyTime(new Date());
-			depositApplyMapper.updateById(depositApply);
+			depositApplyMapper.updateByPrimaryKeySelective(depositApply);
 		}
 	}
 	
@@ -194,14 +178,15 @@ public class BusinessServiceImpl  implements BusinessService{
 		return depositApply.getDid();
 	}
 
-	@DataSource(name = DataSourceNames.SECOND)
-	public Map<String, Object> addRefundRecord(Long userId, BigDecimal amount, Integer refundMethod) {
-		Map<String, Object> res = new HashMap<>();
+
+
+	@Override
+	public Map<String, Object> addRefundRecord(Map<String, Object> map, Long userId, BigDecimal amount,
+			Integer refundMethod) {
 		DynamicDataSource.setDataSource(DataSourceNames.SECOND);
-		logger.info("当前数据源：" + DynamicDataSource.getDataSource());
 		RefundRecord refundRecord = new RefundRecord();
-		String orderNo = UUID.randomUUID().toString();
-		refundRecord.setOrderNo(orderNo);
+		String orderNo = UUID.randomUUID().toString();	//订单号生成器需要统一
+		refundRecord.setOrderNo(orderNo.substring(0, 8));
 		refundRecord.setRefundAmount(amount);
 		refundRecord.setRefundMethod(refundMethod);
 		refundRecord.setRefundType(RefundType.DEPOSIT.getType());
@@ -209,11 +194,24 @@ public class BusinessServiceImpl  implements BusinessService{
 		refundRecord.setUserId(userId);
 		refundRecord.setCreateTime(new Date());
 		refundRecordMapper.insertSelective(refundRecord);
-		
 		DynamicDataSource.clearDataSource();
-		res.put("refundRecordId", refundRecord.getRefundId());
-		res.put("orderNo", orderNo);
-		return res;
+		
+		map.put("refundRecordId", refundRecord.getRefundId());
+		map.put("orderNo", orderNo.substring(0, 8));
+		return map;
+	}
+
+
+	@Override
+	public void updateRefundRecord(Long refundRecordId, String outTradeNo) {
+		DynamicDataSource.setDataSource(DataSourceNames.SECOND);
+		RefundRecord record = new RefundRecord();
+		record.setRefundId(refundRecordId);
+		record.setRefundStatus(RefundStatus.REFUND_SUCCESS.getType());
+		record.setOutTradeNo(outTradeNo);
+		record.setModifyTime(new Date());
+		refundRecordMapper.updateByPrimaryKeySelective(record);
+		DynamicDataSource.clearDataSource();
 	}
 
 }
