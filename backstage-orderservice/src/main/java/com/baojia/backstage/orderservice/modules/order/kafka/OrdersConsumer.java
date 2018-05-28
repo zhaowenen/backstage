@@ -18,7 +18,7 @@ public class OrdersConsumer {
      * @param message*/
 
 
-    @KafkaListener(topics = {"test"})
+    @KafkaListener(topics = {"test"},groupId = "backstageGroup")
     public void consumer(String message){
         System.out.println("test topic message : {}"+message);
     }

@@ -32,7 +32,7 @@ spring:
         application:
             name: backstage-orderservice
         registry:
-            address: zookeeper://192.168.35.234:2181
+            address: zookeeper://10.1.11.147:2888
             group: backstage-dev
         protocol:
             port: 20882
@@ -46,10 +46,15 @@ spring:
           enabled: true
     #kafka配置
     kafka:
+      bootstrap-servers: 10.1.11.147:9092
       consumer:
-        bootstrap-servers: 10.1.11.147:9092
+        group-id: backstageGroup
         enable-auto-commit: true
         auto-offset-reset: earliest
+      producer:
+        batch-size: 65536
+        buffer-memory: 524288
+
 
 
 
