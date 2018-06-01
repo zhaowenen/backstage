@@ -1,12 +1,5 @@
 package com.baojia.backstage.api.controller.user;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.baojia.backstage.api.controller.sys.AbstractController;
 import com.baojia.backstage.common.auth.util.PageUtils;
@@ -14,10 +7,14 @@ import com.baojia.backstage.common.auth.util.R;
 import com.baojia.backstage.domain.user.bo.UserDetailBo;
 import com.baojia.backstage.domain.user.dto.UserDto;
 import com.baojia.backstage.domain.user.dto.UserOperateDto;
-import com.baojia.backstage.usersdk.services.IUserService;
-
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author wxr
@@ -29,7 +26,7 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/users")
 public class UsersController extends AbstractController {
     @Reference
-    private IUserService userService;
+  private IUserService userService;
 
 
     @ApiOperation(value="用户查询列表", notes="根据查询条件查询用户列表")

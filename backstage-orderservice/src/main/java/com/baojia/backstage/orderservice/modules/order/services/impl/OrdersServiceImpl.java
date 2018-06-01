@@ -7,7 +7,7 @@ import com.baojia.backstage.ordersdk.models.*;
 import com.baojia.backstage.ordersdk.searchs.OrdersSearch;
 import com.baojia.backstage.ordersdk.services.*;
 import com.baojia.backstage.orderservice.common.utils.OkHttpUtil;
-import com.baojia.backstage.orderservice.modules.order.dao.OrdersMapper;
+
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -29,7 +29,7 @@ import java.util.Map;
  */
 @Component
 @Service(interfaceClass = IOrdersService.class)
-public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, OrdersEntity> implements IOrdersService {
+public class OrdersServiceImpl extends ServiceImpl<com.baojia.backstage.userservice.modules.user.dao.OrdersMapper, OrdersEntity> implements IOrdersService {
     @Qualifier(value = "okHttpUtil")
     private OkHttpUtil okHttpUtil;
     @Value("${lock.bike.command.url}")

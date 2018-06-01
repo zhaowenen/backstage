@@ -6,12 +6,7 @@ import com.baojia.backstage.domain.order.dto.OrdersDto;
 import com.baojia.backstage.ordersdk.services.IOrdersSearchService;
 import com.baojia.backstage.ordersdk.searchs.OrdersSearch;
 import com.baojia.backstage.orderservice.modules.order.search.dao.OrdersSearchRepository;
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.search.sort.FieldSortBuilder;
-import org.elasticsearch.search.sort.SortBuilders;
-import org.elasticsearch.search.sort.SortOrder;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
